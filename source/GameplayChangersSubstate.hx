@@ -58,14 +58,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		}
 		optionsArray.push(option);
 
-		/*var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
-		option.scrollSpeed = 1;
-		option.minValue = 0.5;
-		option.maxValue = 2.5;
-		option.changeValue = 0.1;
-		option.displayFormat = '%vX';
-		optionsArray.push(option);*/
-
 		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'healthgain', 'float', 1);
 		option.scrollSpeed = 2.5;
 		option.minValue = 0;
@@ -89,6 +81,21 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Random Mode', 'randommode', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Stair Mode', 'stairmode', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Wave Mode', 'wavemode', 'bool', false);
+		optionsArray.push(option);
+	
+		var option:GameplayOption = new GameplayOption('Flip Mode', 'flip', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('One Key', 'onekey', 'bool', false);
 		optionsArray.push(option);
 	}
 
