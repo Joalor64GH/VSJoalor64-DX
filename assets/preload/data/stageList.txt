@@ -1,5 +1,1 @@
 stage
-city
-city-sunset
-city-night
-pyramid

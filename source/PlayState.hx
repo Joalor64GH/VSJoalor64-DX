@@ -458,54 +458,6 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
-
-			case 'city':
-				var bg:BGSprite = new BGSprite('city/sky', -600, -600);
-				bg.scrollFactor.set();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
-				buildings.scrollFactor.set();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
-				grass.scrollFactor.set();
-				add(grass);
-
-			case 'city-sunset':
-				var bg:BGSprite = new BGSprite('city/sunset', -600, -600);
-				bg.scrollFactor.set();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
-				buildings.scrollFactor.set();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
-				grass.scrollFactor.set();
-				add(grass);
-
-			case 'city-night':
-				var bg:BGSprite = new BGSprite('city/night', -600, -600);
-				bg.scrollFactor.set();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/citynight', -600, -600);
-				buildings.scrollFactor.set();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/groundnight', -600, 600);
-				grass.scrollFactor.set();
-				add(grass);
-
-			case 'pyramid':
-				var bg:BGSprite = new BGSprite('pyramid/pyramidinside', -600, -600);
-				bg.scrollFactor.set();
-				add(bg);
-
-				var floor:BGSprite = new BGSprite('pyramid/pyramidground', -600, 600);
-				floor.scrollFactor.set();
-				add(floor);
 		}
 
 		if(isPixelStage) {
@@ -764,7 +716,6 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
@@ -1940,9 +1891,9 @@ class PlayState extends MusicBeatState
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent < 80)
+		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
-		else if (healthBar.percent > 20)
+		else if (healthBar.percent < 20)
 			iconP2.animation.curAnim.curFrame = 2;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
