@@ -8,3 +8,5 @@ gf-christmas
 bf-pixel
 gf-pixel
 bf-pixel-opponent
+memphis
+circle

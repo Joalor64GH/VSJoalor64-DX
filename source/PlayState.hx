@@ -15,11 +15,6 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -36,7 +31,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
-import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
@@ -75,7 +69,7 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	public static var STRUM_X = 42;
+	public static var STRUM_X = 48.5;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
@@ -387,7 +381,7 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'stage': //Week 1
+			case 'stage':
 				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 				add(bg);
 
@@ -411,6 +405,54 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
+
+			case 'city':
+				var bg:BGSprite = new BGSprite('city/sky', -600, -600);
+				bg.scrollFactor.set();
+				add(bg);
+
+				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
+				buildings.scrollFactor.set();
+				add(buildings);
+
+				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
+				grass.scrollFactor.set();
+				add(grass);
+
+			case 'city-sunset':
+				var bg:BGSprite = new BGSprite('city/sunset', -600, -600);
+				bg.scrollFactor.set();
+				add(bg);
+
+				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
+				buildings.scrollFactor.set();
+				add(buildings);
+
+				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
+				grass.scrollFactor.set();
+				add(grass);
+
+			case 'city-night':
+				var bg:BGSprite = new BGSprite('city/night', -600, -600);
+				bg.scrollFactor.set();
+				add(bg);
+
+				var buildings:BGSprite = new BGSprite('city/citynight', -600, -600);
+				buildings.scrollFactor.set();
+				add(buildings);
+
+				var grass:BGSprite = new BGSprite('city/groundnight', -600, 600);
+				grass.scrollFactor.set();
+				add(grass);
+
+			case 'pyramid':
+				var bg:BGSprite = new BGSprite('pyramid/pyramidinside', -600, -600);
+				bg.scrollFactor.set();
+				add(bg);
+
+				var floor:BGSprite = new BGSprite('pyramid/pyramidground', -600, 600);
+				floor.scrollFactor.set();
+				add(floor);
 
 			default:
 				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
@@ -656,9 +698,6 @@ class PlayState extends MusicBeatState
 		noteTypeMap = null;
 		eventPushedMap.clear();
 		eventPushedMap = null;
-
-		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
-		// add(strumLine);
 
 		camFollow = new FlxPoint();
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -1834,8 +1873,6 @@ class PlayState extends MusicBeatState
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
 				}
 			}
-
-			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
 
 		if (camZooming)
@@ -2408,7 +2445,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-
 	public var transitioning = false;
 	public function endSong():Void
 	{
@@ -2446,9 +2482,7 @@ class PlayState extends MusicBeatState
 		if(achievementObj != null) {
 			return;
 		} else {
-			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
-				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
-				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var achieve:String = checkForAchievement(['ur_bad', 'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 
 			if(achieve != null) {
 				startAchievement(achieve);

@@ -1,8 +1,5 @@
 stage
-spooky
-philly
-limo
-mall
-mallEvil
-school
-schoolEvil
+city
+city-sunset
+city-night
+pyramid
