@@ -125,7 +125,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(130);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
@@ -334,7 +334,7 @@ class TitleState extends MusicBeatState
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 
 	public static var closedState:Bool = false;
-	
+
 	override function beatHit()
 	{
 		super.beatHit();
@@ -348,34 +348,44 @@ class TitleState extends MusicBeatState
 				case 1:
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-				case 2:
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-				case 4:
-					addMoreText('present');
+					createCoolText(['Hello']);
 				case 5:
-					deleteCoolText();
-				case 6:
-					createCoolText(['In association', 'with'], -40);
-				case 8:
-					addMoreText('newgrounds', -40);
-					ngSpr.visible = true;
+					addMoreText('This mod was created by');
+				case 7:
+					addMoreText('Joalor64 YT');
+					addMoreText('Bot 404');
 				case 9:
 					deleteCoolText();
-					ngSpr.visible = false;
-				case 10:
-					createCoolText([curWacky[0]]);
-				case 12:
-					addMoreText(curWacky[1]);
+				case 11:
+					createCoolText(['In association']);
 				case 13:
-					deleteCoolText();
-				case 14:
-					addMoreText('Friday');
+					addMoreText('with');
 				case 15:
-					addMoreText('Night');
-				case 16:
-					addMoreText('Funkin');
-
+					addMoreText('Ourselves', -40);
+					ngSpr.visible = true;
 				case 17:
+					deleteCoolText();
+					ngSpr.visible = false;
+				case 19:
+					createCoolText(['Here is your', 'cool text now']);	
+				case 21:
+					addMoreText(curWacky[0]);
+				case 23:
+					addMoreText(curWacky[1]);
+				case 25:
+					deleteCoolText();
+				case 27:
+					createCoolText(['Shoutout to', 'Bot 404']);
+				case 29:
+					deleteCoolText();
+				case 30:
+					createCoolText(['Friday Night Funkin']);
+				case 31:
+					addMoreText('VS Joalor64');
+				case 32:
+					addMoreText('DELUXE');
+
+				case 33:
 					skipIntro();
 			}
 		}
