@@ -19,6 +19,8 @@ import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
 
+import options.OptionsState;
+
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
@@ -270,7 +272,6 @@ class PauseSubState extends MusicBeatSubstate
 					fromPlayState = true;
 				case "Exit":
 					menuItems = exitChoices;
-					deleteSkipTimeText();
 					regenMenu();
 			}
 		}

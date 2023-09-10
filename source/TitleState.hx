@@ -49,8 +49,6 @@ class TitleState extends MusicBeatState
 	var ngSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
-	
-	var titleJSON:TitleData;
 
 	override public function create():Void
 	{

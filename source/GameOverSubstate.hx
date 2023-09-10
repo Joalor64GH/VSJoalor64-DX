@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSubState;
+import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;

@@ -1,4 +1,4 @@
-package meta.substate;
+package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
