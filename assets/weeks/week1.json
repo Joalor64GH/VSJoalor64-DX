@@ -1,0 +1,21 @@
+{
+	"songs": [
+		["Code-and-Stuff", "memphis", [0, 53, 255]],
+		["Imagination", "memphis", [0, 53, 255]],
+		["The-Finale", "memphis", [0, 53, 255]]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "city",
+	"weekCharacters": [],
+	"storyName": "VS Joalor64",
+	"weekName": "Custom Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

@@ -1,0 +1,19 @@
+{
+	"songs": [
+		["Klassicheskiy-Ritm", "circle", [0, 53, 255]]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "pyramid",
+	"weekCharacters": [],
+	"storyName": "Stuck in a Pyramid",
+	"weekName": "Custom Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "week1",
+	"startUnlocked": true
+}
