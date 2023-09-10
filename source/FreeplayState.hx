@@ -53,12 +53,12 @@ class FreeplayState extends MusicBeatState
 		add(menuBG);
 
 		#if (flixel_addons < "3.0.0")
-	checker = new FlxBackdrop(Paths.image('grid'), 0.2, 0.2, true, true);
-	#else
-	checker = new FlxBackdrop(Paths.image('grid'));
-	#end
-        checker.scrollFactor.set(0.07, 0);
-        add(checker);
+		checker = new FlxBackdrop(Paths.image('grid'), 0.2, 0.2, true, true);
+		#else
+		checker = new FlxBackdrop(Paths.image('grid'));
+		#end
+        	checker.scrollFactor.set(0.07, 0);
+        	add(checker);
 
         	var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/slash'));
 		slash.antialiasing = ClientPrefs.globalAntialiasing;
@@ -111,7 +111,7 @@ class FreeplayState extends MusicBeatState
 		super.update(elapsed);
 
 		checker.x -= 0.45;
-	checker.y -= 0.16;
+		checker.y -= 0.16;
 
         	lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, CoolUtil.boundTo(elapsed * 12, 0, 1));
@@ -137,8 +137,8 @@ class FreeplayState extends MusicBeatState
         	{
 			if(colorTween != null) 
 			{
-					colorTween.cancel();
-				}
+				colorTween.cancel();
+			}
                 	FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
         	}
