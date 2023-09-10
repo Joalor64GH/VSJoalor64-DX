@@ -7,7 +7,7 @@
 	"hiddenUntilUnlocked": false,
 	"hideFreeplay": false,
 	"weekBackground": "city",
-	"weekCharacters": [],
+	"weekCharacters": ["", "", ""],
 	"storyName": "VS Joalor64",
 	"weekName": "Custom Week",
 	"freeplayColor": [

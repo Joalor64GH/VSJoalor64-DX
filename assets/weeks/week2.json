@@ -5,7 +5,7 @@
 	"hiddenUntilUnlocked": false,
 	"hideFreeplay": false,
 	"weekBackground": "pyramid",
-	"weekCharacters": [],
+	"weekCharacters": ["", "", ""],
 	"storyName": "Stuck in a Pyramid",
 	"weekName": "Custom Week",
 	"freeplayColor": [
@@ -13,7 +13,7 @@
 		113,
 		253
 	],
-	"hideStoryMode": true,
+	"hideStoryMode": false,
 	"weekBefore": "week1",
 	"startUnlocked": true
 }
