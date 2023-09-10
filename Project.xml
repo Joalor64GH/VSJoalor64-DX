@@ -47,7 +47,8 @@
 	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<section if="VIDEOS_ALLOWED">
-		<assets path="plugins/plugins"  rename="plugins/"       if="windows"/>
+		<assets path="plugins/plugins"        	        rename="plugins/"       if="windows"/>
+		<assets path="plugins/plugins (but for mac)"	rename="plugins/"       if="mac"/>
 	</section>
 	
 	<section if="MODS_ALLOWED">
