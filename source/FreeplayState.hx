@@ -24,6 +24,10 @@ class FreeplayState extends MusicBeatState
 
 	public var controlStrings:Array<CoolSong> = [
 		new CoolSong('Tutorial', 'How to play the game.', 'gf', '911444'),
+		new CoolSong('Code and Stuff', 'Hello.', 'memphis', '00f2ff'),
+		new CoolSong('Imagination', 'This song could be better.', 'memphis', '00f2ff'),
+		new CoolSong('The Finale', 'bang bang', 'memphis', '00f2ff'),
+		new CoolSong('Klassicheskiy Ritm', 'How to play the game.', 'circle', '0004ff'),
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
 	
