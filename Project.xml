@@ -46,6 +46,9 @@
 	<assets path="assets" exclude="*.mp3" unless="web"/>
 	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
+	<section if="VIDEOS_ALLOWED">
+		<assets path="plugins/plugins"  rename="plugins/"       if="windows"/>
+	</section>
 	
 	<section if="MODS_ALLOWED">
 		<assets path='example_mods' rename='mods' embed='false'/>
