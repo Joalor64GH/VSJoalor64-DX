@@ -50,7 +50,7 @@ import Note.EventNote;
 import openfl.events.KeyboardEvent;
 import flixel.util.FlxSave;
 import openfl.filters.ShaderFilter;
-import openfl.display.Shaders;
+import openfl.display.Shader;
 import Shaders;
 import Achievements;
 import StageData;
@@ -2980,6 +2980,8 @@ class PlayState extends MusicBeatState
 			{
 				insert(members.indexOf(strumLineNotes), comboSpr);
 			}
+
+			insert(members.indexOf(strumLineNotes), rating);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
