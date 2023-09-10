@@ -71,8 +71,8 @@ class ResultsSubState extends MusicBeatSubstate
 			+ '\nShits: ' + shit
 			+ '\nScore: ' + points
 			+ '\nMisses: ' + miss
-            + '\nPercent Rating: ' + percentage + '%' 
-            + '\nRating: ' + rate + ' (' + combo + ')'
+            		+ '\nPercent Rating: ' + percentage + '%' 
+            		+ '\nRating: ' + rate + ' (' + combo + ')'
 		, 72);
 		resultsTxt.scrollFactor.set();
 		resultsTxt.setFormat("VCR OSD Mono", 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
