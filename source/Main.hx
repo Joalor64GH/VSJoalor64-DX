@@ -13,6 +13,17 @@ import openfl.display.StageScaleMode;
 
 import core.ToastCore;
 
+#if linux
+import lime.graphics.Image;
+#end
+
+#if linux
+@:cppInclude('./external/gamemode_client.h')
+@:cppFileCode('
+	#define GAMEMODE_AUTO
+')
+#end
+
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -42,6 +53,25 @@ class Main extends Sprite
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
+
+		FlxG.signals.preStateSwitch.add(() ->{
+			#if cpp
+			cpp.NativeGc.run(true);
+			cpp.NativeGc.enable(true);
+			#end
+			FlxG.bitmap.dumpCache();
+			FlxG.bitmap.clearUnused();
+
+			openfl.system.System.gc();
+		});
+
+		FlxG.signals.postStateSwitch.add(() ->{
+			#if cpp
+			cpp.NativeGc.run(false);
+			cpp.NativeGc.enable(false);
+			#end
+			openfl.system.System.gc();
+		});
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, TitleState, #if (flixel < "5.0.0") zoom, #end 60, 60, true, false));
@@ -50,9 +80,13 @@ class Main extends Sprite
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-		if(fpsVar != null) {
+		if(fpsVar != null)
 			fpsVar.visible = ClientPrefs.showFPS;
-		}
+
+		#if linux
+		var icon = Image.fromFile("icon.png");
+		Lib.current.stage.window.setIcon(icon);
+		#end
 
 		#if html5
 		FlxG.autoPause = FlxG.mouse.visible = false;

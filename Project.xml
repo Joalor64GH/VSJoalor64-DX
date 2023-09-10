@@ -79,6 +79,10 @@
 	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
 	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/>
 
+	<!-- hxCodec Debug Stuff -->
+	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
+	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+
 	<!--Enable the Flixel core recording system-->
 	<haxedef name="FLX_RECORD" />
 
@@ -92,9 +96,20 @@
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 
 	<!-- _________________________________ Icons _______________________________ -->
+
+	<assets path='art/iconOG.png' rename='icon.png' if="linux" /> <!-- icon workaround for linux -->
 	
 	<icon path="art/icon16.png" size='16'/>
 	<icon path="art/icon32.png" size='32'/>
 	<icon path="art/icon64.png" size='64'/>
 	<icon path="art/iconOG.png" />
+
+	<!-- _________________________________ Miscellaneous _______________________________ -->
+
+	<target id="haxe" tool="linker" if="linux">
+		<lib name="/usr/lib64/libX11.so" if="HXCPP_M64" /> <!--linux support-->
+	</target> 
+	<target id="haxe" tool="linker" if="macos">
+		<lib name="/lib64/libX11.a" if="HXCPP_M64" /> <!--Macos support-->
+	</target>
 </project>
