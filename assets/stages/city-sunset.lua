@@ -1,18 +1,18 @@
 function onCreate()
 	-- background shit
-	makeLuaSprite('sunset', 'city/sunset', -600, -600);
+	makeLuaSprite('sunset', 'stages/city/sunset', -600, -600);
 	setLuaSpriteScrollFactor('sunset', 1, 1);
 	
 	addLuaSprite('sunset', false);
 	scaleLuaSprite('sunset',1.5,1.5);
 
-    makeLuaSprite('city', 'city/city', -600, -600);
+    makeLuaSprite('city', 'stages/city/city', -600, -600);
 	setLuaSpriteScrollFactor('city', 1, 1);
 	
 	addLuaSprite('city', false);
 	scaleLuaSprite('city',1.5,1.5);
 
-    makeLuaSprite('ground', 'city/ground', -600, -600);
+    makeLuaSprite('ground', 'stages/city/ground', -600, -600);
 	setLuaSpriteScrollFactor('ground', 1, 1);
 	
 	addLuaSprite('ground', false);

@@ -1,12 +1,12 @@
 function onCreate()
 	-- background shit
-	makeLuaSprite('pyramidinside', 'pyramid/pyramidinside', -600, -600);
+	makeLuaSprite('pyramidinside', 'stages/pyramid/pyramidinside', -600, -600);
 	setLuaSpriteScrollFactor('pyramidinside', 1, 1);
 	
 	addLuaSprite('pyramidinside', false);
 	scaleLuaSprite('pyramidinside',1.5,1.5);
 
-    makeLuaSprite('pyramidground', 'pyramid/pyramidground', -600, -600);
+    makeLuaSprite('pyramidground', 'stages/pyramid/pyramidground', -600, -600);
 	setLuaSpriteScrollFactor('pyramidground', 1, 1);
 	
 	addLuaSprite('pyramidground', false);
