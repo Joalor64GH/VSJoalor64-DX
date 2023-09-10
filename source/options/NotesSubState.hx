@@ -33,25 +33,24 @@ class NotesSubState extends MusicBeatSubstate
 	private static var typeSelected:Int = 0;
 	private var grpNumbers:FlxTypedGroup<Alphabet>;
 	private var grpNotes:FlxTypedGroup<FlxSprite>;
-	private var shaderArray:Array<ColorMask> = [];
-	private var defaultColors:Array<Array<Int>> = [[194, 75, 153], [0, 255, 255], [18, 250, 5], [249, 57, 63]];
+	private var shaderArray:Array<ColorSwap> = [];
 	var curValue:Float = 0;
 	var holdTime:Float = 0;
 	var nextAccept:Int = 5;
 
 	var blackBG:FlxSprite;
-	var rgbText:Alphabet;
+	var hsbText:Alphabet;
 
 	var posX = 230;
 	public function new() {
 		super();
-
+		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-
+		
 		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 200, FlxColor.BLACK);
 		blackBG.alpha = 0.4;
 		add(blackBG);
@@ -61,18 +60,12 @@ class NotesSubState extends MusicBeatSubstate
 		grpNumbers = new FlxTypedGroup<Alphabet>();
 		add(grpNumbers);
 
-		for (i in 0...ClientPrefs.arrowRGB.length) {
+		for (i in 0...ClientPrefs.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:Alphabet = new Alphabet(posX + (205 * j) + 250, yPos + 60, Std.string(ClientPrefs.arrowRGB[i][j]), true);
+				var optionText:Alphabet = new Alphabet(0, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
+				optionText.x = posX + (225 * j) + 250;
 				grpNumbers.add(optionText);
-
-				var item = grpNumbers.members[(i * 3) + j];
-				var add = (40 * (item.letters.length - 1)) / 2;
-				for (letter in item.letters)
-				{
-					letter.offset.x += add;
-				}
 			}
 
 			var note:FlxSprite = new FlxSprite(posX, yPos);
@@ -83,17 +76,17 @@ class NotesSubState extends MusicBeatSubstate
 			note.antialiasing = ClientPrefs.globalAntialiasing;
 			grpNotes.add(note);
 
-			var newShader:ColorMask = new ColorMask();
+			var newShader:ColorSwap = new ColorSwap();
 			note.shader = newShader.shader;
-			newShader.rCol = FlxColor.fromRGB(ClientPrefs.arrowRGB[i][0], ClientPrefs.arrowRGB[i][1], ClientPrefs.arrowRGB[i][2]);
-			newShader.gCol = newShader.rCol.getDarkened(0.6);
+			newShader.hue = ClientPrefs.arrowHSV[i][0] / 360;
+			newShader.saturation = ClientPrefs.arrowHSV[i][1] / 100;
+			newShader.brightness = ClientPrefs.arrowHSV[i][2] / 100;
 			shaderArray.push(newShader);
 		}
 
-		rgbText = new Alphabet(posX + 550, 0, "Red        Green      Blue", false);
-		rgbText.scaleX = 0.6;
-		rgbText.scaleY = 0.6;
-		add(rgbText);
+		hsbText = new Alphabet(0, 0, "Hue    Saturation  Brightness", false, false, 0, 0.65);
+		hsbText.x = posX + 240;
+		add(hsbText);
 
 		changeSelection();
 	}
@@ -118,10 +111,14 @@ class NotesSubState extends MusicBeatSubstate
 					holdTime += elapsed;
 				}
 			} else {
+				var add:Float = 90;
+				switch(typeSelected) {
+					case 1 | 2: add = 50;
+				}
 				if(controls.UI_LEFT) {
-					updateValue(elapsed * -50);
+					updateValue(elapsed * -add);
 				} else if(controls.UI_RIGHT) {
-					updateValue(elapsed * 50);
+					updateValue(elapsed * add);
 				}
 				if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
 					FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -193,11 +190,11 @@ class NotesSubState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = ClientPrefs.arrowRGB.length-1;
-		if (curSelected >= ClientPrefs.arrowRGB.length)
+			curSelected = ClientPrefs.arrowHSV.length-1;
+		if (curSelected >= ClientPrefs.arrowHSV.length)
 			curSelected = 0;
 
-		curValue = ClientPrefs.arrowRGB[curSelected][typeSelected];
+		curValue = ClientPrefs.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -214,7 +211,7 @@ class NotesSubState extends MusicBeatSubstate
 			if (curSelected == i) {
 				item.alpha = 1;
 				item.scale.set(1, 1);
-				rgbText.y = item.y - 70;
+				hsbText.y = item.y - 70;
 				blackBG.y = item.y - 20;
 			}
 		}
@@ -228,7 +225,7 @@ class NotesSubState extends MusicBeatSubstate
 		if (typeSelected > 2)
 			typeSelected = 0;
 
-		curValue = ClientPrefs.arrowRGB[curSelected][typeSelected];
+		curValue = ClientPrefs.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -242,42 +239,42 @@ class NotesSubState extends MusicBeatSubstate
 
 	function resetValue(selected:Int, type:Int) {
 		curValue = 0;
-		ClientPrefs.arrowRGB[selected][type] = defaultColors[selected][type];
-
-		shaderArray[selected].rCol = FlxColor.fromRGB(ClientPrefs.arrowRGB[selected][0], ClientPrefs.arrowRGB[selected][1], ClientPrefs.arrowRGB[selected][2]);
-		shaderArray[selected].gCol = shaderArray[selected].rCol.getDarkened(0.6);
+		ClientPrefs.arrowHSV[selected][type] = 0;
+		switch(type) {
+			case 0: shaderArray[selected].hue = 0;
+			case 1: shaderArray[selected].saturation = 0;
+			case 2: shaderArray[selected].brightness = 0;
+		}
 
 		var item = grpNumbers.members[(selected * 3) + type];
-		item.text = Std.string(ClientPrefs.arrowRGB[selected][type]);
-
-		var add = (40 * (item.letters.length - 1)) / 2;
-		for (letter in item.letters)
-		{
-			letter.offset.x += add;
-		}
+		item.changeText('0');
+		item.offset.x = (40 * (item.lettersArray.length - 1)) / 2;
 	}
 	function updateValue(change:Float = 0) {
 		curValue += change;
 		var roundedValue:Int = Math.round(curValue);
+		var max:Float = 180;
+		switch(typeSelected) {
+			case 1 | 2: max = 100;
+		}
 
-		if(roundedValue < 0) {
-			curValue = 0;
-		} else if(roundedValue > 255) {
-			curValue = 255;
+		if(roundedValue < -max) {
+			curValue = -max;
+		} else if(roundedValue > max) {
+			curValue = max;
 		}
 		roundedValue = Math.round(curValue);
-		ClientPrefs.arrowRGB[curSelected][typeSelected] = roundedValue;
+		ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
 
-		shaderArray[curSelected].rCol = FlxColor.fromRGB(ClientPrefs.arrowRGB[curSelected][0], ClientPrefs.arrowRGB[curSelected][1], ClientPrefs.arrowRGB[curSelected][2]);
-		shaderArray[curSelected].gCol = shaderArray[curSelected].rCol.getDarkened(0.6);
+		switch(typeSelected) {
+			case 0: shaderArray[curSelected].hue = roundedValue / 360;
+			case 1: shaderArray[curSelected].saturation = roundedValue / 100;
+			case 2: shaderArray[curSelected].brightness = roundedValue / 100;
+		}
 
 		var item = grpNumbers.members[(curSelected * 3) + typeSelected];
-		item.text = Std.string(roundedValue);
-
-		var add = (40 * (item.letters.length - 1)) / 2;
-		for (letter in item.letters)
-		{
-			letter.offset.x += add;
-		}
+		item.changeText(Std.string(roundedValue));
+		item.offset.x = (40 * (item.lettersArray.length - 1)) / 2;
+		if(roundedValue < 0) item.offset.x += 10;
 	}
 }
