@@ -63,6 +63,27 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Shaders', //Name
+			'If unchecked, disables shaders.', //Description
+			'shaders', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
+		addOption(option);
+
+		var option:Option = new Option('Colorblind Filter:',
+			"For colorblind people.",
+			'colorBlindFilter',
+			'string',
+			'None',
+			[
+				'None', 
+				'Deuteranopia', 
+				'Protanopia', 
+				'Tritanopia'
+			]);
+		addOption(option);
+		option.onChange = () -> Colorblind.updateFilter();
+
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
