@@ -23,7 +23,7 @@ class FreeplayState extends MusicBeatState
         private var iconArray:Array<HealthIcon> = [];
 
 	public var controlStrings:Array<CoolSong> = [
-		new CoolSong('Tutorial', 'Hot to play the game.', 'gf', '911444'),
+		new CoolSong('Tutorial', 'How to play the game.', 'gf', '911444'),
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
 	
