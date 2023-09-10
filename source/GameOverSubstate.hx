@@ -35,17 +35,46 @@ class GameOverSubstate extends MusicBeatSubstate
 		endSoundName = 'gameOverEnd';
 	}
 
+	var resultsTxt:FlxText;
+
+	var points = 0;
+	var miss = 0;
+	var percentage = 0.0;
+	var rate = '';
+	var combo = '';
+
 	override function create()
 	{
 		instance = this;
 		PlayState.instance.callOnLuas('onGameOverStart', []);
 
+		resultsTxt = new FlxText(12, FlxG.height - 44, 0,  
+			'Score: ' + points
+			+ ' // Misses: ' + miss
+			+ ' // Rating: ' + percentage + '%'
+			+ ' // ' + rate + ' (' + combo + ')'
+		, 12);
+		resultsTxt.scrollFactor.set();
+		resultsTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		resultsTxt.updateHitbox();
+		add(resultsTxt);
+
+		resultsTxt.alpha = 0;
+
+		FlxTween.tween(resultsTxt, {alpha: 1}, 4.5, {ease: FlxEase.quadOut});
+
 		super.create();
 	}
 
-	public function new(x:Float, y:Float, camX:Float, camY:Float)
+	public function new(x:Float, y:Float, camX:Float, camY:Float, score:Int, misses:Int, percent:Float, rating:String, fc:String)
 	{
 		super();
+
+		points = score;
+		miss = misses;
+		percentage = percent;
+		rate = rating;
+		combo = fc;
 
 		PlayState.instance.setOnLuas('inGameOver', true);
 
@@ -59,9 +88,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow = new FlxPoint(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
 
 		FlxG.sound.play(Paths.sound(deathSoundName));
-		Conductor.changeBPM(100);
-		// FlxG.camera.followLerp = 1;
-		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
 
