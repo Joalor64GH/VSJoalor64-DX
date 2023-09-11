@@ -357,9 +357,9 @@ class TitleState extends MusicBeatState
 				case 9:
 					deleteCoolText();
 				case 11:
-					createCoolText(['In association']);
+					createCoolText(['In association'], -40);
 				case 13:
-					addMoreText('with');
+					addMoreText('with', -40);
 				case 15:
 					addMoreText('Ourselves', -40);
 					ngSpr.visible = true;
