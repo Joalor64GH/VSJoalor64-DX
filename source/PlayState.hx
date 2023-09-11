@@ -393,13 +393,13 @@ class PlayState extends MusicBeatState
 			{
 				// the stages are in .lua scripts so it doesn't really matter
 				case 'code-and-stuff':
-					stage = 'city';
+					curStage = 'city';
 				case 'imagination':
-					stage = 'city-sunset';
+					curStage = 'city-sunset';
 				case 'the-finale':
-					stage = 'city-night';
+					curStage = 'city-night';
 				case 'klassicheskiy-ritm':
-					stage = 'pyramid';
+					curStage = 'pyramid';
 				default:
 					curStage = 'stage';
 			}

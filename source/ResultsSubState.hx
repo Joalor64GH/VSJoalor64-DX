@@ -45,6 +45,7 @@ class ResultsSubState extends MusicBeatSubstate
 	{
 		persistentUpdate = true;
 
+		FlxG.sound.music.fadeIn(4, 0, 0.7);
 		FlxG.sound.playMusic(Paths.music('breakfast'), 1);
 
         	bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -100,10 +101,7 @@ class ResultsSubState extends MusicBeatSubstate
 
 	if (controls.ACCEPT) 
 	{
-	    if (PlayState.isStoryMode)
-		    MusicBeatState.switchState(new StoryMenuState());
-	    else 
-		    MusicBeatState.switchState(new FreeplayState());
+		MusicBeatState.switchState((PlayState.isStoryMode) ? new StoryMenuState() : new FreeplayState());
 	    FlxG.sound.playMusic(Paths.music('freakyMenu'));
 	}
     }

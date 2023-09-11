@@ -71,8 +71,6 @@ class PlayerSettings
 
 			player2.controls.addDefaultGamepad(1);
 		}
-
-		// DeviceManager.init();
 	}
 
 	static public function reset()
