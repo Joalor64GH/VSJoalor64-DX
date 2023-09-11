@@ -6,4 +6,7 @@ import flixel.sound.FlxSound;
 #else
 import flixel.system.FlxSound;
 #end
+
+using StringTools;
+using CoolUtil;
 #end
