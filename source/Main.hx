@@ -43,17 +43,11 @@ class Main extends Sprite
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 
 	public static var fpsVar:FPS;
-	public static var game:Joalor64Game; // the main game
 	public static var toast:ToastCore; // credits go to MAJigsaw77
 
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
-
-		#if CRASH_HANDLER
-		@:privateAccess
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, function(e) game.exceptionCaughtOpenFL(e));
-		#end
 	}
 
 	public function new()
@@ -92,8 +86,11 @@ class Main extends Sprite
 		});
 	
 		ClientPrefs.loadDefaultKeys();
-		game = new Joalor64Game(gameWidth, gameHeight, TitleState, #if (flixel < "5.0.0") zoom, #end 60, 60, true, false);
-		addChild(game);
+		addChild(new FlxGame(gameWidth, gameHeight, TitleState, #if (flixel < "5.0.0") zoom, #end 60, 60, true, false));
+
+		#if CRASH_HANDLER
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+		#end
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -111,145 +108,48 @@ class Main extends Sprite
 		FlxG.autoPause = FlxG.mouse.visible = false;
 		#end
 
+		// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
+		// very cool person for real they don't get enough credit for their work
+		#if CRASH_HANDLER
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, (e) -> {
+			var errMsg:String = "";
+			var path:String;
+			var callStack:Array<StackItem> = CallStack.exceptionStack(true);
+			var dateNow:String = Date.now().toString();
+	
+			dateNow = dateNow.replace(" ", "_");
+			dateNow = dateNow.replace(":", "'");
+	
+			path = "./crash/" + "VSJoalor64DX_" + dateNow + ".txt";
+	
+			for (stackItem in callStack)
+			{
+				switch (stackItem)
+				{
+					case FilePos(s, file, line, column):
+						errMsg += file + " (line " + line + ")\n";
+					default:
+						Sys.println(stackItem);
+				}
+			}
+	
+			errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Joalor64GH/VSJoalor64-DX/issues\n\n> Crash Handler written by: sqirra-rng";
+	
+			if (!FileSystem.exists("./crash/"))
+				FileSystem.createDirectory("./crash/");
+	
+			File.saveContent(path, errMsg + "\n");
+	
+			Sys.println(errMsg);
+			Sys.println("Crash dump saved in " + Path.normalize(path));
+	
+			Application.current.window.alert(errMsg, "Error!");
+			DiscordClient.shutdown();
+			Sys.exit(1);
+		});
+		#end
+
 		toast = new ToastCore();
 		addChild(toast);
-	}
-}
-
-class Joalor64Game extends FlxGame {
-	/**
-	 * Used to instantiate the guts of the flixel game object once we have a valid reference to the root.
-	 */
-	override function create(_):Void {
-		try super.create(_)
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	/**
-	 * Called when the user on the game window
-	 */
-	override function onFocus(_):Void {
-		try super.onFocus(_)
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	/**
-	 * Called when the user clicks off the game window
-	 */
-	override function onFocusLost(_):Void {
-		try super.onFocusLost(_)
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	/**
-	 * Handles the `onEnterFrame` call and figures out how many updates and draw calls to do.
-	 */
-	override function onEnterFrame(_):Void {
-		try super.onEnterFrame(_)
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	/**
-	 * This function is called by `step()` and updates the actual game state.
-	 * May be called multiple times per "frame" or draw call.
-	 */
-	override function update():Void {
-		try super.update()
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	/**
-	 * Goes through the game state and draws all the game objects and special effects.
-	 */
-	override function draw():Void {
-		try super.draw()
-		catch (e:haxe.Exception)
-			return exceptionCaught(e);
-	}
-
-	private function exceptionCaught(e:haxe.Exception) {
-		#if CRASH_HANDLER
-		var callStack:CallStack = CallStack.exceptionStack(true);
-
-		final formattedMessage:String = getCallStack().join("\n");
-
-		FlxG.sound.music.volume = 0;
-
-		DiscordClient.shutdown();
-
-		goToExceptionState(e.message, formattedMessage, true, callStack);
-		#else
-		throw e;
-		#end
-	}
-
-	#if CRASH_HANDLER
-	private function exceptionCaughtOpenFL(e:UncaughtErrorEvent) {
-		var callStack:CallStack = CallStack.exceptionStack(true);
-
-		final formattedMessage:String = getCallStack().join("\n");
-
-		FlxG.sound.music.volume = 0;
-
-		DiscordClient.shutdown();
-
-		goToExceptionState(e.error, formattedMessage, true, callStack);
-	}
-
-	private function getCallStack():Array<String> {
-		var caughtErrors:Array<String> = [];
-
-		for (stackItem in CallStack.exceptionStack(true)) {
-			switch (stackItem) {
-				case CFunction:
-					caughtErrors.push('Non-Haxe (C) Function');
-				case Module(moduleName):
-					caughtErrors.push('Module (${moduleName})');
-				case FilePos(s, file, line, column):
-					caughtErrors.push('${file} (line ${line})');
-				case Method(className, method):
-					caughtErrors.push('${className} (method ${method})');
-				case LocalFunction(name):
-					caughtErrors.push('Local Function (${name})');
-			}
-
-			Sys.println(stackItem);
-		}
-
-		return caughtErrors;
-	}
-
-	private function goToExceptionState(exception:String, errorMsg:String, shouldGithubReport:Bool, ?callStack:CallStack) {
-		var arguments:Array<Dynamic> = [exception, errorMsg, shouldGithubReport];
-		if (callStack != null)
-			arguments.push(callStack);
-
-		_requestedState = Type.createInstance(exception.ExceptionState, arguments);
-		switchState();
-	}
-
-	private function writeLog(path:String, errMsg:String) {
-		if (!FileSystem.exists("crash/"))
-			FileSystem.createDirectory("crash/");
-		File.saveContent(path, '${errMsg}\n');
-
-		Sys.println(errMsg);
-		Sys.println('Crash dump saved in ${Path.normalize(path)}');
-	}
-	#end
-
-	private function getLogPath():String
-		return "crash/" + "VSJoalor64DX_" + formatDate() + ".txt";
-
-	private function formatDate():String {
-		var dateNow:String = Date.now().toString();
-		dateNow = StringTools.replace(dateNow, " ", "_");
-		dateNow = StringTools.replace(dateNow, ":", "'");
-		return dateNow;
 	}
 }

@@ -101,11 +101,6 @@ class CoolUtil
 		FlxG.openURL(site);
 		#end
 	}
-
-	@:keep public static inline function boundFPS(input:Float) {
-		@:privateAccess 
-		return input;
-	}
 }
 
 // there's a big difference between the two

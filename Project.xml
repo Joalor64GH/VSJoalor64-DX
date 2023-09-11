@@ -104,7 +104,7 @@
 		<haxedef name="no-deprecation-warnings"/>
 	</section>
 
-	<!-- Crash handler stuff -->
+	<!--Used for Izzy Engine's crash handler-->
 	<section if="CRASH_HANDLER">
 		<haxedef name="HXCPP_CHECK_POINTER" />
 		<haxedef name="HXCPP_STACK_LINE" />
