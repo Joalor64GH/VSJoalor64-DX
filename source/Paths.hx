@@ -25,8 +25,8 @@ using StringTools;
 
 class Paths
 {
-	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
-	inline public static var VIDEO_EXT = "mp4";
+	inline public static final SOUND_EXT = #if !web "ogg" #else "mp3" #end;
+	inline public static final VIDEO_EXT = "mp4";
 
 	#if MODS_ALLOWED
 	public static var ignoreModFolders:Array<String> = [
