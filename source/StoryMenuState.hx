@@ -138,12 +138,23 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
-		txtTracklist.color = 0xFF5b57e5;
+		txtTracklist.color = 0xFFe55777;
 		add(txtTracklist);
 		add(scoreText);
 		add(txtWeekTitle);
 
 		changeWeek();
+
+		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
+		textBG.alpha = 0.6;
+		add(textBG);
+
+		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press R to Reset your Score and Accuracy.";
+		var size:Int = 18;
+		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
+		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
+		text.scrollFactor.set();
+		add(text);
 
 		super.create();
 	}

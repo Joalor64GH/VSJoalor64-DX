@@ -22,12 +22,12 @@ class FreeplayState extends MusicBeatState
 		
         private var iconArray:Array<HealthIcon> = [];
 
-	public var controlStrings:Array<CoolSong> = [
+	public var controlStrings:Array<CoolSong> = [ // these songs will be remastered!!
 		new CoolSong('Tutorial', 'How to play the game.', 'gf', '911444'),
 		new CoolSong('Code and Stuff', 'Hello.', 'memphis', '00f2ff'),
 		new CoolSong('Imagination', 'This song could be better.', 'memphis', '00f2ff'),
 		new CoolSong('The Finale', 'bang bang', 'memphis', '00f2ff'),
-		new CoolSong('Klassicheskiy Ritm', 'How to play the game.', 'circle', '0004ff'),
+		new CoolSong('Klassicheskiy Ritm', 'Bounds round', 'circle', '0004ff'), // and i'll add some for him :)
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
 	
@@ -149,13 +149,13 @@ class FreeplayState extends MusicBeatState
             
 		if (controls.ACCEPT)
 		{
-            		FlxG.sound.music.volume = 0;
-            		FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxG.sound.play(Paths.sound('confirmMenu'));
 			var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
 			var formatIdfk:String = Highscore.formatSong(lowercasePlz);
 			LoadingState.loadAndSwitchState(new PlayState());
 			PlayState.SONG = Song.loadFromJson(formatIdfk, lowercasePlz);
 			PlayState.isStoryMode = false;
+			FlxG.sound.music.volume = 0;
 		}
 
         	if (FlxG.keys.justPressed.CONTROL)

@@ -277,6 +277,8 @@ class PlayState extends MusicBeatState
 
 	public var comboFunction:Void->Void = null;
 
+	public static var bonusUnlock:Bool = false;
+
 	override public function create()
 	{
 		Paths.clearStoredMemory();
@@ -389,6 +391,15 @@ class PlayState extends MusicBeatState
 		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
 			switch (songName)
 			{
+				// the stages are in .lua scripts so it doesn't really matter
+				case 'code-and-stuff':
+					stage = 'city';
+				case 'imagination':
+					stage = 'city-sunset';
+				case 'the-finale':
+					stage = 'city-night';
+				case 'klassicheskiy-ritm':
+					stage = 'pyramid';
 				default:
 					curStage = 'stage';
 			}
@@ -2622,6 +2633,16 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong():Void
 	{
+		/*
+		if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
+		{
+			bonusUnlock = true;
+
+			FlxG.save.data.bonusUnlock = true;
+			FlxG.save.flush();
+		}
+		*/
+		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {

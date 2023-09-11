@@ -88,6 +88,11 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
+		/*if (FlxG.save.data.bonusUnlock != null)
+		{
+			PlayState.bonusUnlock = FlxG.save.data.bonusUnlock;
+		}*/
+
 		FlxG.mouse.visible = false;
 
 		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
