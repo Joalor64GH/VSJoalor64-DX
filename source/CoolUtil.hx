@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import openfl.utils.Assets;
+import lime.utils.Assets as LimeAssets;
 
 using StringTools;
 
@@ -11,9 +12,19 @@ class CoolUtil
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float
 		return Math.max(min, Math.min(max, value));
 
+	inline public static function txtSplit(path:String)
+	{
+		return [for (i in LimeAssets.getText(path).trim().split('\n')) i.trim()];
+	}
+
 	inline public static function coolTextFile(path:String):Array<String> {
 		return (Assets.exists(path)) ? [for (i in Assets.getText(path).trim().split('\n')) i.trim()] : [];
 	}
+
+	// this is actual source code from VS Null https://gamebanana.com/mods/447674
+	// now outdated 😅
+	public static inline function coolerTextFile(path:String, daString:String = ''):String
+		return FileAssets.exists(path) ? daString = Assets.getText(path).trim() : '';
 
 	inline public static function colorFromString(color:String):FlxColor
 	{
@@ -86,5 +97,10 @@ class CoolUtil
 		#else
 		FlxG.openURL(site);
 		#end
+	}
+
+	@:keep public static inline function boundFPS(input:Float) {
+		@:privateAccess 
+		return input;
 	}
 }
