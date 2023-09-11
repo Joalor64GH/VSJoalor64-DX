@@ -4,6 +4,9 @@ import flixel.FlxG;
 import flixel.util.FlxColor;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
+#if sys
+import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -104,3 +107,6 @@ class CoolUtil
 		return input;
 	}
 }
+
+// there's a big difference between the two
+typedef FileAssets = #if sys FileSystem; #else openfl.utils.Assets; #end
