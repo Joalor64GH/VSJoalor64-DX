@@ -48,8 +48,10 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import ReplayState.ReplayPauseSubstate;
 import Character;
 #if sys
+import sys.io.File;
 import sys.FileSystem;
 #end
 
@@ -60,6 +62,7 @@ import sys.FileSystem;
 #else import vlc.MP4Handler; #end
 #end
 
+using CoolUtil;
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -173,7 +176,6 @@ class PlayState extends MusicBeatState
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
 	private var updateTime:Bool = true;
-	public static var changedDifficulty:Bool = false;
 	public static var chartingMode:Bool = false;
 
 	// shader stuff
@@ -240,6 +242,8 @@ class PlayState extends MusicBeatState
 	var detailsPausedText:String = "";
 	#end
 
+		var inReplay:Bool;
+
 	//Achievement shit
 	var keysPressed:Array<Bool> = [];
 	var boyfriendIdleTime:Float = 0.0;
@@ -276,6 +280,14 @@ class PlayState extends MusicBeatState
 
 		// for lua
 		instance = this;
+
+				if (!inReplay)
+		{
+			ReplayState.hits = [];
+			ReplayState.miss = [];
+			ReplayState.judgements = [];
+			ReplayState.sustainHits = [];
+		}
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
@@ -1956,7 +1968,10 @@ class PlayState extends MusicBeatState
 					FlxG.sound.music.pause();
 					vocals.pause();
 				}
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				if (inReplay)
+			        openSubState(new ReplayPauseSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		    	else
+			        openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		
 				#if desktop
 				DiscordClient.changePresence(detailsPausedText, SONG.song, iconP2.getCharacter());
@@ -2638,6 +2653,20 @@ class PlayState extends MusicBeatState
 	{
 		openfl.system.System.gc();
 
+		#if sys
+		if (!inReplay)
+		{
+			final files:Array<String> = CoolUtil.coolPathArray(Paths.getPreloadPath('replays/'));
+			final song:String = SONG.song.coolSongFormatter().toLowerCase();
+			var length:Null<Int> = null;
+
+			length = (files == null) ? 0 : files.length;
+
+			if (ClientPrefs.saveReplay)
+				File.saveContent(Paths.getPreloadPath('replays/$song ${length}.json'), ReplayState.stringify());
+		}
+		#end
+
 		/*
 		if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
 		{
@@ -2707,7 +2736,12 @@ class PlayState extends MusicBeatState
 				#end
 			}
 
-			if (chartingMode)
+			if (inReplay)
+			{
+				MusicBeatState.switchState(new FreeplayState());
+				return;
+			}
+			else if (chartingMode)
 			{
 				openChartEditor();
 				return;
@@ -2729,8 +2763,11 @@ class PlayState extends MusicBeatState
 
 					new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 						persistentUpdate = true;
-						openSubState(new ResultsSubState(sicks, goods, bads, shits, Std.int(campaignScore), Std.int(campaignMisses), 
-							Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC)); 
+						if (!inReplay) 
+						{
+							openSubState(new ResultsSubState(sicks, goods, bads, shits, Std.int(campaignScore), Std.int(campaignMisses), 
+								Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC));
+						} 
 					});
 
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -2784,7 +2821,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				trace('WENT BACK TO FREEPLAY??');
+				trace('SONG FINISHED??');
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
@@ -2792,8 +2829,11 @@ class PlayState extends MusicBeatState
 
 				new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 					persistentUpdate = true;
-					openSubState(new ResultsSubState(sicks, goods, bads, shits, songScore, songMisses,
-				 		Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC)); 
+					if (!inReplay) 
+					{
+						openSubState(new ResultsSubState(sicks, goods, bads, shits, songScore, songMisses,
+				 			Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC));
+					} 
 				});
 			}
 			transitioning = true;
@@ -2838,7 +2878,7 @@ class PlayState extends MusicBeatState
 	public var showComboNum:Bool = true;
 	public var showRating:Bool = true;
 
-	private function popUpScore(note:Note = null):Void
+	private function popUpScore(?note:Note, ?optionalRating:Float):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 		vocals.volume = 1;
@@ -2851,6 +2891,15 @@ class PlayState extends MusicBeatState
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
+
+			if (!inReplay)
+		{
+			ReplayState.hits.push(note.strumTime);
+			ReplayState.judgements.push(noteDiff);
+		}
+
+		if (optionalRating != null)
+			noteDiff = optionalRating;
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:String = Conductor.judgeNote(note, noteDiff);
@@ -3088,7 +3137,7 @@ class PlayState extends MusicBeatState
 
 					}
 				}
-				else if (canMiss) {
+				else if (canMiss && !ClientPrefs.ghostTapping) {
 					noteMissPress(key);
 					callOnLuas('noteMissPress', [key]);
 				}
@@ -3256,6 +3305,11 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			if (!inReplay)
+			{
+				ReplayState.miss.push([Std.int(Conductor.songPosition), direction]);
+			}
+
 			health -= 0.05 * healthLoss;
 			if(instakillOnMiss)
 			{
@@ -3384,6 +3438,11 @@ class PlayState extends MusicBeatState
 				popUpScore(note);
 				if(combo > 9999) combo = 9999;
 			}
+			else if (!inReplay && note.isSustainNote)
+			{
+				ReplayState.sustainHits.push(Std.int(note.strumTime));
+			}
+
 			health += note.hitHealth * healthGain;
 
 			if(!note.noAnimation) {
@@ -3427,14 +3486,10 @@ class PlayState extends MusicBeatState
 					time += 0.15;
 				}
 				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
-			} else {
-				playerStrums.forEach(function(spr:StrumNote)
-				{
-					if (Math.abs(note.noteData) == spr.ID)
-					{
-						spr.playAnim('confirm', true);
-					}
-				});
+			} 
+			else 
+			{
+				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, 0);
 			}
 			note.wasGoodHit = true;
 			vocals.volume = 1;
@@ -3642,6 +3697,13 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	function StrumPress(id:Int, ?time:Float = 0)
+	{
+		var spr:StrumNote = playerStrums.members[id];
+		spr.playAnim('pressed');
+		spr.resetAnim = time == null ? 0 : time;
+	}
+
 	public var ratingName:String = '?';
 	public var ratingPercent:Float;
 	public var ratingFC:String;
@@ -3688,7 +3750,7 @@ class PlayState extends MusicBeatState
 	#if ACHIEVEMENTS_ALLOWED
 	private function checkForAchievement(achievesToCheck:Array<String> = null):String
 	{
-		if(chartingMode) return null;
+		if(chartingMode || inReplay) return null;
 
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
 		for (i in 0...achievesToCheck.length) {

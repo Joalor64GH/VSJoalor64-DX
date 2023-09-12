@@ -102,13 +102,13 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
-		var blackBox:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 80, FlxColor.BLACK);
+		var blackBox:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 75, FlxColor.BLACK);
 		blackBox.scrollFactor.set();
 		blackBox.alpha = 0.6;
 		add(blackBox);
 
-		var keyText:FlxText = new FlxText(0, 4, FlxG.width, "R // RESET SCORE\nCTRL // OPEN GAMEPLAY CHANGERS MENU", 32);
-		keyText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		var keyText:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
+		keyText.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER);
 		keyText.scrollFactor.set();
 		add(keyText);
 
@@ -179,6 +179,12 @@ class FreeplayState extends MusicBeatState
 			openSubState(new ResetScoreSubState(controlStrings[curSelected].name, controlStrings[curSelected].icon));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
+		#if sys
+		else if (FlxG.keys.justPressed.ALT && ClientPrefs.saveReplay)
+		{
+			MusicBeatState.switchState(new ReplaySelectState(controlStrings[curSelected].name));
+		}
+		#end
 	}
 
 	function changeSelection(change:Int = 0)
