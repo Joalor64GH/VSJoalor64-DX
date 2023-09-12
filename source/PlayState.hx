@@ -214,6 +214,7 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	public var versionTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -773,7 +774,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
-		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Currently Playing: ${SONG.song} - Psych Engine v${MainMenuState.psychEngineVersion}', 12);
+		versionTxt = new FlxText(4, FlxG.height - 24, 0, 'Currently Playing: ${SONG.song} - Psych Engine v${MainMenuState.psychEngineVersion}', 12);
 		versionTxt.scrollFactor.set();
 		versionTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);

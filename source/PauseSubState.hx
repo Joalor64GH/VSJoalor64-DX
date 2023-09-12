@@ -197,7 +197,6 @@ class PauseSubState extends MusicBeatSubstate
 							MusicBeatState.switchState(new FreeplayState());
 							PlayState.cancelMusicFadeTween();
 							FlxG.sound.playMusic(Paths.music('freakyMenu'));
-							PlayState.changedDifficulty = false;
 							PlayState.chartingMode = false;
 						case "Exit to Menu":
 							PlayState.deathCounter = 0;
@@ -211,7 +210,6 @@ class PauseSubState extends MusicBeatSubstate
 							}
 							PlayState.cancelMusicFadeTween();
 							FlxG.sound.playMusic(Paths.music('freakyMenu'));
-							PlayState.changedDifficulty = false;
 							PlayState.chartingMode = false;
 						case "Exit Game":
 							MusicBeatState.switchState(new GameExitState());
@@ -269,7 +267,6 @@ class PauseSubState extends MusicBeatSubstate
 					WeekData.loadTheFirstEnabledMod();
 					MusicBeatState.switchState(new OptionsState());
 					PlayState.cancelMusicFadeTween();
-					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
 					fromPlayState = true;
 				case "Exit":

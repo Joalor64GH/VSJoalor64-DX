@@ -126,7 +126,7 @@ class ReplaySelectState extends MusicBeatState
         else if (controls.ACCEPT && menuItems.length > 0)
         {
             PlayState.SONG = Song.loadFromJson(song, songName);
-            LoadingState.loadAndSwitchState(new ReplayState(Std.parseInt(menuItems[curSelected].split(" ")[1])), true);
+            LoadingState.loadAndSwitchState(new ReplayState());
         }
 
         else if (controls.BACK)
