@@ -228,7 +228,6 @@ class TitleState extends MusicBeatState
 	}
 
 	var transitioning:Bool = false;
-	private static var playJingle:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -402,6 +401,7 @@ class TitleState extends MusicBeatState
 
 	var skippedIntro:Bool = false;
 	var increaseVolume:Bool = false;
+	
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
