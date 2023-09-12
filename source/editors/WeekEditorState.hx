@@ -589,6 +589,11 @@ class WeekEditorFreeplayState extends MusicBeatState
 		bg.color = FlxColor.WHITE;
 		add(bg);
 
+			var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/slash'));
+		slash.antialiasing = ClientPrefs.globalAntialiasing;
+		slash.screenCenter();
+		add(slash);
+
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 

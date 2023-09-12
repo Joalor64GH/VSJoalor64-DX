@@ -30,7 +30,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 			name = WeekData.weeksLoaded.get(WeekData.weeksList[week]).weekName;
 		}
 
-		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg = new FlxSprite().loadGraphic(Paths.image('menuBGSubstate'));
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);

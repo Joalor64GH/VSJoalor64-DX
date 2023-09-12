@@ -194,7 +194,6 @@ class PlayState extends MusicBeatState
 	var stairs:Bool = false;
 	var waves:Bool = false;
 	var oneK:Bool = false;
-	var randomSpeedThing:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;

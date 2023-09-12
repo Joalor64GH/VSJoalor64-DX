@@ -102,6 +102,16 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
+		var blackBox:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 80, FlxColor.BLACK);
+		blackBox.scrollFactor.set();
+		blackBox.alpha = 0.6;
+		add(blackBox);
+
+		var keyText:FlxText = new FlxText(0, 4, FlxG.width, "R // RESET SCORE\nCTRL // OPEN GAMEPLAY CHANGERS MENU", 32);
+		keyText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		keyText.scrollFactor.set();
+		add(keyText);
+
 		menuBG.color = CoolUtil.colorFromString(controlStrings[curSelected].color);
 		intendedColor = menuBG.color;
 
