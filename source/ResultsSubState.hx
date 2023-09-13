@@ -101,7 +101,7 @@ class ResultsSubState extends MusicBeatSubstate
 
 	if (controls.ACCEPT) 
 	{
-		MusicBeatState.switchState((PlayState.isStoryMode) ? new StoryMenuState() : new FreeplayState());
+	MusicBeatState.switchState((PlayState.isStoryMode) ? new StoryMenuState() : new FreeplayState());
 	    FlxG.sound.playMusic(Paths.music('freakyMenu'));
 	}
     }

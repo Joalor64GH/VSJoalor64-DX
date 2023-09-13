@@ -122,13 +122,11 @@ class ReplaySelectState extends MusicBeatState
 
         if ((controls.UI_UP_P || controls.UI_DOWN_P) && menuItems.length > 0)
             changeSelection(controls.UI_UP_P ? -1 : 1);
-
         else if (controls.ACCEPT && menuItems.length > 0)
         {
             PlayState.SONG = Song.loadFromJson(song, songName);
             LoadingState.loadAndSwitchState(new ReplayState());
         }
-
         else if (controls.BACK)
             FlxG.switchState(new FreeplayState());
 
@@ -168,7 +166,6 @@ class ReplaySelectState extends MusicBeatState
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
 			{

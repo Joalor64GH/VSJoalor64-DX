@@ -30,6 +30,8 @@ class FreeplayState extends MusicBeatState
 		new CoolSong('Klassicheskiy Ritm', 'Bounds round', 'circle', '0004ff'), // and i'll add some for him :)
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
+
+	public static var passwordCorrect:Bool;
 	
 	var lerpScore:Int = 0;
 	var lerpRating:Float = 0;
