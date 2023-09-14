@@ -54,6 +54,10 @@ class Main extends Sprite
 	{
 		super();
 
+		#if windows
+		NativeUtil.enableDarkMode();
+		#end
+
 		final stageWidth:Int = Lib.current.stage.stageWidth;
 		final stageHeight:Int = Lib.current.stage.stageHeight;
 
