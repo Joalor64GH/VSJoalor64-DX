@@ -92,6 +92,7 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
+		// saving this for later
 		/*if (FlxG.save.data.bonusUnlock != null)
 		{
 			PlayState.bonusUnlock = FlxG.save.data.bonusUnlock;
@@ -229,10 +230,17 @@ class TitleState extends MusicBeatState
 
 	var transitioning:Bool = false;
 
+	var bgSine:Float = 0;
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
+
+		if(bg.visible)
+		{
+			bgSine += 180 * elapsed;
+			bg.alpha = 1 - Math.sin((Math.PI * bgSine) / 180);
+		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
                 {

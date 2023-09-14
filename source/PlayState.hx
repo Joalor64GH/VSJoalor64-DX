@@ -591,16 +591,6 @@ class PlayState extends MusicBeatState
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);
 		}
 
-		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
-		if (OpenFlAssets.exists(file)) {
-			dialogue = CoolUtil.coolTextFile(file);
-		}
-		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		doof.scrollFactor.set();
-		doof.finishThing = startCountdown;
-		doof.nextDialogueThing = startNextDialogue;
-		doof.skipDialogueThing = skipDialogue;
-
 		Conductor.songPosition = -5000;
 
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
@@ -791,7 +781,6 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
-		doof.cameras = [camHUD];
 		versionTxt.cameras = [camHUD];
 
 		startingSong = true;
@@ -1163,21 +1152,6 @@ class PlayState extends MusicBeatState
 				startCountdown();
 			}
 		}
-	}
-
-	function schoolIntro(?dialogueBox:DialogueBox):Void
-	{
-		inCutscene = true;
-
-		var songName:String = Paths.formatToSongPath(SONG.song);
-
-		new FlxTimer().start(0.3, function(tmr:FlxTimer)
-		{
-			if (dialogueBox != null)
-				add(dialogueBox);
-			else
-				startCountdown();
-		});
 	}
 
 	var startTimer:FlxTimer;
