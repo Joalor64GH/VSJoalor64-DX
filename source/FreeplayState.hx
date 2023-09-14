@@ -31,6 +31,7 @@ class FreeplayState extends MusicBeatState
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
 
+	// saving this for later
 	public static var passwordCorrect:Bool;
 	
 	var lerpScore:Int = 0;
@@ -40,8 +41,6 @@ class FreeplayState extends MusicBeatState
 
 	var scoreText:FlxText;
 	var descTxt:FlxText;
-
-	var bottomPanel:FlxSprite;
 
 	var menuBG:FlxSprite;
 
@@ -88,7 +87,7 @@ class FreeplayState extends MusicBeatState
 			add(icon);
 		}
         
-        	bottomPanel = new FlxSprite(0, FlxG.height - 100).makeGraphic(FlxG.width, 100, 0xFF000000);
+        	var bottomPanel:FlxSprite = new FlxSprite(0, FlxG.height - 100).makeGraphic(FlxG.width, 100, 0xFF000000);
 		bottomPanel.alpha = 0.5;
 		add(bottomPanel);
 
@@ -104,15 +103,16 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
-		var blackBox:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 75, FlxColor.BLACK);
-		blackBox.scrollFactor.set();
-		blackBox.alpha = 0.6;
-		add(blackBox);
+		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 75, FlxColor.BLACK);
+		topPanel.scrollFactor.set();
+		topPanel.alpha = 0.6;
+		add(topPanel);
 
-		var keyText:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
-		keyText.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER);
-		keyText.scrollFactor.set();
-		add(keyText);
+		var controlsTxt:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
+		controlsTxt.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		controlsTxt.screenCenter(XY);
+		controlsTxt.scrollFactor.set();
+		add(controlsTxt);
 
 		menuBG.color = CoolUtil.colorFromString(controlStrings[curSelected].color);
 		intendedColor = menuBG.color;
