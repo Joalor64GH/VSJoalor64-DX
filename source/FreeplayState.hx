@@ -103,14 +103,14 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
-		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 75, FlxColor.BLACK);
+		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 50, FlxColor.BLACK);
 		topPanel.scrollFactor.set();
 		topPanel.alpha = 0.6;
 		add(topPanel);
 
 		var controlsTxt:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
 		controlsTxt.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		controlsTxt.screenCenter(XY);
+		controlsTxt.screenCenter(Y);
 		controlsTxt.scrollFactor.set();
 		add(controlsTxt);
 

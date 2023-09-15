@@ -7,6 +7,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+
 import PlayState;
 
 class ResultsSubState extends MusicBeatSubstate 
@@ -49,7 +50,6 @@ class ResultsSubState extends MusicBeatSubstate
 		FlxG.sound.playMusic(Paths.music('breakfast'), 1);
 
         	bg = new FlxSprite().loadGraphic(Paths.image('menuBGSubstate'));
-        	bg.scale.set(10, 10);
         	bg.alpha = 0;
         	add(bg);
 

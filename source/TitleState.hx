@@ -47,7 +47,7 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
+	var itsUsLmao:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -195,13 +195,13 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.globalAntialiasing;
+		itsUsLmao = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('ourselves'));
+		add(itsUsLmao);
+		itsUsLmao.visible = false;
+		itsUsLmao.setGraphicSize(Std.int(itsUsLmao.width * 0.8));
+		itsUsLmao.updateHitbox();
+		itsUsLmao.screenCenter(X);
+		itsUsLmao.antialiasing = ClientPrefs.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -369,10 +369,10 @@ class TitleState extends MusicBeatState
 					addMoreText('with', -40);
 				case 15:
 					addMoreText('Ourselves', -40);
-					ngSpr.visible = true;
+					itsUsLmao.visible = true;
 				case 17:
 					deleteCoolText();
-					ngSpr.visible = false;
+					itsUsLmao.visible = false;
 				case 19:
 					createCoolText(['Here is your', 'cool text now']);	
 				case 21:
@@ -405,7 +405,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(ngSpr);
+			remove(itsUsLmao);
 			remove(credGroup);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
