@@ -1107,12 +1107,8 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	function startAndEnd()
-	{
-		if(endingSong)
-			endSong();
-		else
-			startCountdown();
+	inline function startAndEnd(){
+		(endingSong) ? endSong() : startCountdown();
 	}
 
 	var dialogueCount:Int = 0;
