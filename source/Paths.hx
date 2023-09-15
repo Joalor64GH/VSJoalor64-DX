@@ -129,6 +129,7 @@ class Paths
 		Assets.cache.clear("songs");
 	}
 
+	static var currentLevel:String;
 	static public var currentModDirectory:String = '';
 
 	public static function getPath(file:String, ?type:AssetType, ?library:Null<String> = null)
@@ -138,7 +139,10 @@ class Paths
 
 	inline public static function getPreloadPath(file:String = '')
 	{
-		return 'assets/$file';
+		var path = 'assets/$file';
+		if (currentLevel != null && Assets.exists('$currentLevel:$path'))
+			return '$currentLevel:$path';
+		return path;
 	}
 
 	inline static public function txt(key:String, ?library:String)

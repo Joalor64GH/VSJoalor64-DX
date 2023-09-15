@@ -16,6 +16,7 @@ class FlashingState extends MusicBeatState
 		super.create();
 
 		bg = new FlxSprite().loadGraphic(Paths.image('warning'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, true);
@@ -45,6 +46,7 @@ class FlashingState extends MusicBeatState
 						MusicBeatState.switchState(new TitleState());
 					}
 				});
+				leftState = true;
 			}
 		}
 		super.update(elapsed);
