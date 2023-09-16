@@ -103,7 +103,7 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
-		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 50, FlxColor.BLACK);
+		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 35, FlxColor.BLACK);
 		topPanel.scrollFactor.set();
 		topPanel.alpha = 0.6;
 		add(topPanel);

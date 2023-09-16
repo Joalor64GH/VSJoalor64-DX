@@ -317,7 +317,7 @@ class PlayState extends MusicBeatState
 			else if (songMisses < 10){
 				ratingFC = "SDCB";
 			}
-			else if (songMisses < 100){
+			else if (songMisses > 100){
 				ratingFC = "WTF??";
 			}
 			else if (cpuControlled){
@@ -394,7 +394,7 @@ class PlayState extends MusicBeatState
 		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
 			switch (songName)
 			{
-				// these stage were done in .lua, so it doesn't really matter
+				// these stages were done in .lua, so it doesn't really matter
 				case 'code-and-stuff':
 					curStage = 'city';
 				case 'imagination':
