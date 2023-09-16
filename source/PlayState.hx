@@ -530,13 +530,6 @@ class PlayState extends MusicBeatState
 				add(grass);
 
 			case 'pyramid':
-				if (!ClientPrefs.lowQuality) {
-					var curtains:BGSprite = new BGSprite('pyramid/curtains', -600, -600);
-					curtains.setGraphicSize(Std.int(curtains.width * 1.1));
-					curtains.updateHitbox();
-					add(curtains);
-				}
-
 				var bg:BGSprite = new BGSprite('pyramid/pyramidbackground', -600, -600);
 				bg.setGraphicSize(Std.int(bg.width * 1.1));
 				bg.updateHitbox();
@@ -546,6 +539,13 @@ class PlayState extends MusicBeatState
 				floor.setGraphicSize(Std.int(floor.width * 1.1));
 				floor.updateHitbox();
 				add(floor);
+
+				if (!ClientPrefs.lowQuality) {
+					var curtains:BGSprite = new BGSprite('pyramid/curtains', -600, -600);
+					curtains.setGraphicSize(Std.int(curtains.width * 1.1));
+					curtains.updateHitbox();
+					add(curtains);
+				}
 		}
 
 		if(isPixelStage) {
