@@ -35,10 +35,11 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
+		#if !switch 
+		'ost',
+		'discord', 
+		#end
 		'options'
 	];
 
@@ -204,9 +205,15 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
+				if (optionShit[curSelected] == 'ost')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					// placeholder link until the actual ost comes out
+					CoolUtil.browserLoad('https://www.youtube.com/playlist?list=PLxj2uzHFxP2Z4LZymCMwCDqEe3OsX1poD');
+				}
+				else if (optionShit[curSelected] == 'discord')
+				{
+					// Join my server plz :))
+					CoolUtil.browserLoad('https://discord.gg/ScMB5ZX2mE');
 				}
 				else
 				{
@@ -239,12 +246,6 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
-									#if MODS_ALLOWED
-									case 'mods':
-										MusicBeatState.switchState(new ModsMenuState());
-									#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':

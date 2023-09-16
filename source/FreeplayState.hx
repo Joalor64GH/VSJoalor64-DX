@@ -110,7 +110,7 @@ class FreeplayState extends MusicBeatState
 
 		var controlsTxt:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
 		controlsTxt.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		controlsTxt.screenCenter(Y);
+		controlsTxt.screenCenter(X);
 		controlsTxt.scrollFactor.set();
 		add(controlsTxt);
 
