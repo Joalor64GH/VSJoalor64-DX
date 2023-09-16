@@ -45,7 +45,7 @@ class ReplayState extends PlayState
         final file:ReplayFile = Json.parse(Assets.getText(Paths.getPreloadPath('replays/$_song.json')));
         #end
 
-        versionTxt.text = 'Replay of: ${_song} - Psych Engine v${MainMenuState.psychEngineVersion}';
+        versionTxt.text = 'Replay of: ${_song} | Psych Engine v${MainMenuState.psychEngineVersion}';
 
         hits = file.hits;
         miss = file.misses;

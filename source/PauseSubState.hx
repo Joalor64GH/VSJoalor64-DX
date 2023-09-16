@@ -142,14 +142,8 @@ class PauseSubState extends MusicBeatSubstate
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
 
-		if (upP)
-		{
-			changeSelection(-1);
-		}
-		if (downP)
-		{
-			changeSelection(1);
-		}
+		if (upP || downP)
+			changeSelection(upP ? -1 : 1);
 
 		var daSelected:String = menuItems[curSelected];
 		switch (daSelected)

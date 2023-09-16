@@ -763,7 +763,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
-		versionTxt = new FlxText(4, FlxG.height - 24, 0, 'Currently Playing: ${SONG.song} - Psych Engine v${MainMenuState.psychEngineVersion}', 12);
+		versionTxt = new FlxText(4, FlxG.height - 24, 0, 'Currently Playing: ${SONG.song} | Psych Engine v${MainMenuState.psychEngineVersion}', 12);
 		versionTxt.scrollFactor.set();
 		versionTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);

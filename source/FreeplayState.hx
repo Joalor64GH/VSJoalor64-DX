@@ -103,13 +103,13 @@ class FreeplayState extends MusicBeatState
 		descTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(descTxt);
 
-		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 35, FlxColor.BLACK);
+		var topPanel:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 26, FlxColor.BLACK);
 		topPanel.scrollFactor.set();
 		topPanel.alpha = 0.6;
 		add(topPanel);
 
-		var controlsTxt:FlxText = new FlxText(0, 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
-		controlsTxt.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		var controlsTxt:FlxText = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
+		controlsTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		controlsTxt.screenCenter(X);
 		controlsTxt.scrollFactor.set();
 		add(controlsTxt);
@@ -161,13 +161,13 @@ class FreeplayState extends MusicBeatState
             
 		if (controls.ACCEPT)
 		{
+			FlxG.sound.music.volume = 0;
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
 			var formatIdfk:String = Highscore.formatSong(lowercasePlz);
 			LoadingState.loadAndSwitchState(new PlayState());
 			PlayState.SONG = Song.loadFromJson(formatIdfk, lowercasePlz);
 			PlayState.isStoryMode = false;
-			FlxG.sound.music.volume = 0;
 		}
 
         	if (FlxG.keys.justPressed.CONTROL)
