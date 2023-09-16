@@ -394,6 +394,7 @@ class PlayState extends MusicBeatState
 		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
 			switch (songName)
 			{
+				// these stage were done in .lua, so it doesn't really matter
 				case 'code-and-stuff':
 					curStage = 'city';
 				case 'imagination':
@@ -479,72 +480,6 @@ class PlayState extends MusicBeatState
 					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
-				}
-
-			case 'city':
-				var bg:BGSprite = new BGSprite('city/sky', -600, -600);
-				bg.setGraphicSize(Std.int(bg.width * 1.1));
-				bg.updateHitbox();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
-				buildings.setGraphicSize(Std.int(buildings.width * 1.1));
-				buildings.updateHitbox();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
-				grass.setGraphicSize(Std.int(grass.width * 1.1));
-				grass.updateHitbox();
-				add(grass);
-
-			case 'city-sunset':
-				var bg:BGSprite = new BGSprite('city/sunset', -600, -600);
-				bg.setGraphicSize(Std.int(bg.width * 1.1));
-				bg.updateHitbox();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/city', -600, -600);
-				buildings.setGraphicSize(Std.int(buildings.width * 1.1));
-				buildings.updateHitbox();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/ground', -600, 600);
-				grass.setGraphicSize(Std.int(grass.width * 1.1));
-				grass.updateHitbox();
-				add(grass);
-
-			case 'city-night':
-				var bg:BGSprite = new BGSprite('city/night', -600, -600);
-				bg.setGraphicSize(Std.int(bg.width * 1.1));
-				bg.updateHitbox();
-				add(bg);
-
-				var buildings:BGSprite = new BGSprite('city/citynight', -600, -600);
-				buildings.setGraphicSize(Std.int(buildings.width * 1.1));
-				buildings.updateHitbox();
-				add(buildings);
-
-				var grass:BGSprite = new BGSprite('city/groundnight', -600, 600);
-				grass.setGraphicSize(Std.int(grass.width * 1.1));
-				grass.updateHitbox();
-				add(grass);
-
-			case 'pyramid':
-				var bg:BGSprite = new BGSprite('pyramid/pyramidbackground', -600, -600);
-				bg.setGraphicSize(Std.int(bg.width * 1.1));
-				bg.updateHitbox();
-				add(bg);
-
-				var floor:BGSprite = new BGSprite('pyramid/pyramidground', -600, 600);
-				floor.setGraphicSize(Std.int(floor.width * 1.1));
-				floor.updateHitbox();
-				add(floor);
-
-				if (!ClientPrefs.lowQuality) {
-					var curtains:BGSprite = new BGSprite('pyramid/curtains', -600, -600);
-					curtains.setGraphicSize(Std.int(curtains.width * 1.1));
-					curtains.updateHitbox();
-					add(curtains);
 				}
 		}
 
