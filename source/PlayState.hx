@@ -279,6 +279,8 @@ class PlayState extends MusicBeatState
 
 		Paths.clearStoredMemory();
 
+		PauseSubState.fromPlayState = false;
+
 		// for lua
 		instance = this;
 
