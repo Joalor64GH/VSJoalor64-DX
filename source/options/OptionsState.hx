@@ -83,7 +83,7 @@ class OptionsState extends MusicBeatState
 		super.update(elapsed);
 
 		if (controls.UI_UP_P || controls.UI_DOWN_P) {
-			changeSelection(UI_UP_P ? -1 : 1);
+			changeSelection(controls.UI_UP_P ? -1 : 1);
 		}
 
 		if (controls.BACK) {
