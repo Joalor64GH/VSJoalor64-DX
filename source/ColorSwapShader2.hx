@@ -1,4 +1,4 @@
-package shaders;
+package;
 
 import flixel.graphics.tile.FlxGraphicsShader;
 
