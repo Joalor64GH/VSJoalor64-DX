@@ -1,5 +1,6 @@
 package;
 
+import ColorSwapShader2;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -73,7 +74,7 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
-		swagShader = new ColorSwap();
+		swagShader = new ColorSwap2();
 		super.create();
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
@@ -122,7 +123,7 @@ class TitleState extends MusicBeatState
 
 	var logoBl:FlxSprite;
 	var titleText:FlxSprite;
-	var swagShader:ColorSwap = null;
+	var swagShader:ColorSwap2;
 
 	function startIntro()
 	{
@@ -145,14 +146,14 @@ class TitleState extends MusicBeatState
 		logoBl.screenCenter(XY);
 		logoBl.updateHitbox();
 
-		swagShader = new ColorSwap();
-
 		bg = new FlxSprite().loadGraphic(Paths.image('leTitleBG'));
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 
 		add(bg);
+		if (swagShader != null)
+			bg.shader = swagShader.shader;
 		add(logoBl);
 		if (swagShader != null)
 			logoBl.shader = swagShader.shader;
@@ -293,8 +294,8 @@ class TitleState extends MusicBeatState
 
 		if(swagShader != null)
 		{
-			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
-			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
+			if(controls.UI_LEFT || controls.UI_RIGHT) 
+				swagShader.update(controls.UI_LEFT ? elapsed * 0.1 : -elapsed * 0.1);
 		}
 
 		super.update(elapsed);
