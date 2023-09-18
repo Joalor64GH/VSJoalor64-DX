@@ -6,7 +6,6 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
-import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.FlxCamera;
 import flixel.FlxObject;

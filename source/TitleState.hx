@@ -93,11 +93,18 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
-		// saving this for later
-		/*if (FlxG.save.data.bonusUnlock != null)
+		// saving these for later
+		/*
+		if (FlxG.save.data.bonusUnlock != null)
 		{
 			PlayState.bonusUnlock = FlxG.save.data.bonusUnlock;
-		}*/
+		}
+
+		if (FlxG.save.data.passwordCorrect != null)
+		{
+			FreeplayState.passwordCorrect = FlxG.save.data.passwordCorrect;
+		}
+		*/
 
 		FlxG.mouse.visible = false;
 
@@ -374,10 +381,12 @@ class TitleState extends MusicBeatState
 				case 17:
 					deleteCoolText();
 					itsUsLmao.visible = false;
+					createCoolText([curWacky[0]]);	
 				case 19:
-					createCoolText(['Here is your', 'cool text now']);	
+					addMoreText(curWacky[1]);
 				case 21:
-					addMoreText(curWacky[0]);
+					deleteCoolText();
+					createCoolText([curWacky[0]]);
 				case 23:
 					addMoreText(curWacky[1]);
 				case 25:
