@@ -9,4 +9,7 @@ bf-pixel
 gf-pixel
 bf-pixel-opponent
 memphis
+memphis-alt
 circle
+circle-player
+legacy

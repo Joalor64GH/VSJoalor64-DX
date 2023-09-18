@@ -3,3 +3,6 @@ city
 city-sunset
 city-night
 pyramid
+hills
+snow
+room
