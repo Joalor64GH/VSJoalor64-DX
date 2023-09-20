@@ -275,6 +275,9 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		#if cpp
+		cpp.vm.Gc.enable(true);
+		#end
 		openfl.system.System.gc();
 
 		Paths.clearStoredMemory();
@@ -3516,6 +3519,10 @@ class PlayState extends MusicBeatState
 			luaArray[i].stop();
 		}
 		luaArray = [];
+
+		#if cpp
+		cpp.vm.Gc.enable(true);
+		#end
 
 		if(!ClientPrefs.controllerMode)
 		{
