@@ -2641,16 +2641,6 @@ class PlayState extends MusicBeatState
 				File.saveContent(Paths.getPreloadPath('replays/$song ${length}.json'), ReplayState.stringify());
 		}
 		#end
-
-		/*
-		if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
-		{
-			bonusUnlock = true;
-
-			FlxG.save.data.bonusUnlock = true;
-			FlxG.save.flush();
-		}
-		*/
 		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
@@ -2729,6 +2719,16 @@ class PlayState extends MusicBeatState
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
+				/*
+				if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
+				{
+					bonusUnlock = true;
+
+					FlxG.save.data.bonusUnlock = true;
+					FlxG.save.flush();
+				}
+				*/	
+
 				if (storyPlaylist.length <= 0)
 				{
 					cancelMusicFadeTween();
@@ -2762,18 +2762,6 @@ class PlayState extends MusicBeatState
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]));
 
-					var winterHorrorlandNext = (Paths.formatToSongPath(SONG.song) == "eggnog");
-					if (winterHorrorlandNext)
-					{
-						var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
-							-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
-						blackShit.scrollFactor.set();
-						add(blackShit);
-						camHUD.visible = false;
-
-						FlxG.sound.play(Paths.sound('Lights_Shut_off'));
-					}
-
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
 
@@ -2783,15 +2771,8 @@ class PlayState extends MusicBeatState
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0], PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
 
-					if(winterHorrorlandNext) {
-						new FlxTimer().start(1.5, function(tmr:FlxTimer) {
-							cancelMusicFadeTween();
-							LoadingState.loadAndSwitchState(new PlayState());
-						});
-					} else {
-						cancelMusicFadeTween();
-						LoadingState.loadAndSwitchState(new PlayState());
-					}
+					cancelMusicFadeTween();
+					LoadingState.loadAndSwitchState(new PlayState());
 				}
 			}
 			else
