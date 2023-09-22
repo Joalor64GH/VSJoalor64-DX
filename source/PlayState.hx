@@ -1067,7 +1067,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):VideoManager
+	public function startVideo(name:String):backend.VideoManager
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -1784,10 +1784,8 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-			#if LUA_ALLOWED
 			for (tween in modchartTweens) tween.active = true;
 			for (timer in modchartTimers) timer.active = true;
-			#end
 
 			#if VIDEOS_ALLOWED
 			if(videoSprites.length > 0) {
@@ -2266,14 +2264,12 @@ class PlayState extends MusicBeatState
 
 				persistentUpdate = false;
 				persistentDraw = false;
-				#if LUA_ALLOWED
 				for (tween in modchartTweens) {
 					tween.active = true;
 				}
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
-				#end
 				#if VIDEOS_ALLOWED
 				//i assume it's better removing the thing on gameover
 				if(videoSprites.length > 0) {
