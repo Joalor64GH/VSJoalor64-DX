@@ -56,7 +56,10 @@ import sys.FileSystem;
 #end
 
 #if VIDEOS_ALLOWED
-import backend.VideoManager;
+#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as MP4Handler;
+#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
+#else import vlc.MP4Handler; #end
 #end
 
 using CoolUtil;
@@ -269,10 +272,6 @@ class PlayState extends MusicBeatState
 	public var comboFunction:Void->Void = null;
 
 	public static var bonusUnlock:Bool = false;
-
-	#if VIDEOS_ALLOWED 
-	public var videoSprites:Array<backend.VideoSpriteManager> = []; 
-	#end 
 
 	override public function create()
 	{
@@ -1067,7 +1066,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):backend.VideoManager
+	public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -1076,20 +1075,32 @@ class PlayState extends MusicBeatState
 		#if sys
 		if(!FileSystem.exists(filepath))
 		#else
-		if(!Assets.exists(filepath))
+		if(!OpenFlAssets.exists(filepath))
 		#end
 		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
 			startAndEnd();
-			return null;
+			return;
 		}
-		var video:VideoManager = new VideoManager();
-		video.startVideo(filepath);
-		video.setFinishCallBack(function(){
+		var video:MP4Handler = new MP4Handler();
+		#if (hxCodec >= "3.0.0")
+		// Recent versions
+		video.play(filepath);
+		video.onEndReached.add(function()
+		{
+			video.dispose();
 			startAndEnd();
-			return null;
-		});
-		return video;
+			return;
+		}, true);
+		#else
+		// Older versions
+		video.playVideo(filepath);
+		video.finishCallback = function()
+		{
+			startAndEnd();
+			return;
+		}
+		#end
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
@@ -1787,19 +1798,6 @@ class PlayState extends MusicBeatState
 			for (tween in modchartTweens) tween.active = true;
 			for (timer in modchartTimers) timer.active = true;
 
-			#if VIDEOS_ALLOWED
-			if(videoSprites.length > 0) {
-				for(daVideoSprite in 0...videoSprites.length) {
-					videoSprites[daVideoSprite].bitmap.resume();
-					if (FlxG.autoPause)
-					{
-						FlxG.signals.focusGained.add(videoSprites[daVideoSprite].bitmap.resume);
-						FlxG.signals.focusLost.add(videoSprites[daVideoSprite].bitmap.pause);
-					}
-				}
-			}
-			#end
-
 			paused = false;
 			callOnLuas('onResume', []);
 
@@ -1934,23 +1932,6 @@ class PlayState extends MusicBeatState
 				persistentUpdate = false;
 				persistentDraw = true;
 				paused = true;
-
-				#if VIDEOS_ALLOWED
-				if(videoSprites.length > 0) {
-					for(daVideoSprite in 0...videoSprites.length) {
-						videoSprites[daVideoSprite].bitmap.pause();
-						//prevent the video from resuming on focus change in pause menu
-						if (FlxG.autoPause)
-						{
-							if (FlxG.signals.focusGained.has(videoSprites[daVideoSprite].bitmap.resume))
-								FlxG.signals.focusGained.remove(videoSprites[daVideoSprite].bitmap.resume);
-
-							if (FlxG.signals.focusLost.has(videoSprites[daVideoSprite].bitmap.pause))
-								FlxG.signals.focusLost.remove(videoSprites[daVideoSprite].bitmap.pause);
-						}
-					}
-				}
-				#end
 
 				if(FlxG.sound.music != null) {
 					FlxG.sound.music.pause();
@@ -2270,17 +2251,6 @@ class PlayState extends MusicBeatState
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
-				#if VIDEOS_ALLOWED
-				//i assume it's better removing the thing on gameover
-				if(videoSprites.length > 0) {
-					for(daVideoSprite in 0...videoSprites.length) {
-						videoSprites[daVideoSprite].bitmap.onEndReached();
-						videoSprites[daVideoSprite].kill();
-					}
-					for(i in videoSprites) 
-						videoSprites.remove(i);
-				}
-				#end
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y, 
 					songScore, songMisses, Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC));
 				
@@ -3509,17 +3479,6 @@ class PlayState extends MusicBeatState
 
 		#if cpp
 		cpp.vm.Gc.enable(true);
-		#end
-
-		#if VIDEOS_ALLOWED
-		if(videoSprites.length > 0) {
-			for(daVideoSprite in 0...videoSprites.length) {
-				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
-				videoSprites[daVideoSprite].kill(); //some sort of optmization
-			}
-			for(i in videoSprites)
-				videoSprites.remove(i); //clearing
-		}
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
