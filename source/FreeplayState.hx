@@ -80,6 +80,10 @@ class FreeplayState extends MusicBeatState
 			controlLabel.targetY = i - curSelected;
 			grpControls.add(controlLabel);
 
+			var maxWidth = 980;
+			if (controlLabel.width > maxWidth)
+				controlLabel.scaleX = maxWidth / controlLabel.width;
+
             		var icon:HealthIcon = new HealthIcon(controlStrings[i].icon);
 			icon.sprTracker = controlLabel;
 			icon.updateHitbox();

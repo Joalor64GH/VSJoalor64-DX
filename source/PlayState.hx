@@ -56,10 +56,7 @@ import sys.FileSystem;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as MP4Handler;
-#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+import backend.VideoManager;
 #end
 
 using CoolUtil;
@@ -272,6 +269,10 @@ class PlayState extends MusicBeatState
 	public var comboFunction:Void->Void = null;
 
 	public static var bonusUnlock:Bool = false;
+
+	#if VIDEOS_ALLOWED 
+	public var videoSprites:Array<backend.VideoSpriteManager> = []; 
+	#end 
 
 	override public function create()
 	{
@@ -849,11 +850,8 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song, iconP2.getCharacter());
 		#end
 
-		if(!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		}
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
 		callOnLuas('onCreatePost', []);
@@ -1069,7 +1067,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
+	public function startVideo(name:String):VideoManager
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -1078,36 +1076,24 @@ class PlayState extends MusicBeatState
 		#if sys
 		if(!FileSystem.exists(filepath))
 		#else
-		if(!OpenFlAssets.exists(filepath))
+		if(!Assets.exists(filepath))
 		#end
 		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
 			startAndEnd();
-			return;
+			return null;
 		}
-		var video:MP4Handler = new MP4Handler();
-		#if (hxCodec >= "3.0.0")
-		// Recent versions
-		video.play(filepath);
-		video.onEndReached.add(function()
-		{
-			video.dispose();
+		var video:VideoManager = new VideoManager();
+		video.startVideo(filepath);
+		video.setFinishCallBack(function(){
 			startAndEnd();
-			return;
-		}, true);
-		#else
-		// Older versions
-		video.playVideo(filepath);
-		video.finishCallback = function()
-		{
-			startAndEnd();
-			return;
-		}
-		#end
+			return null;
+		});
+		return video;
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
-		return;
+		return null;
 		#end
 	}
 
@@ -1798,12 +1784,24 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-			for (tween in modchartTweens) {
-				tween.active = true;
+			#if LUA_ALLOWED
+			for (tween in modchartTweens) tween.active = true;
+			for (timer in modchartTimers) timer.active = true;
+			#end
+
+			#if VIDEOS_ALLOWED
+			if(videoSprites.length > 0) {
+				for(daVideoSprite in 0...videoSprites.length) {
+					videoSprites[daVideoSprite].bitmap.resume();
+					if (FlxG.autoPause)
+					{
+						FlxG.signals.focusGained.add(videoSprites[daVideoSprite].bitmap.resume);
+						FlxG.signals.focusLost.add(videoSprites[daVideoSprite].bitmap.pause);
+					}
+				}
 			}
-			for (timer in modchartTimers) {
-				timer.active = true;
-			}
+			#end
+
 			paused = false;
 			callOnLuas('onResume', []);
 
@@ -1938,6 +1936,23 @@ class PlayState extends MusicBeatState
 				persistentUpdate = false;
 				persistentDraw = true;
 				paused = true;
+
+				#if VIDEOS_ALLOWED
+				if(videoSprites.length > 0) {
+					for(daVideoSprite in 0...videoSprites.length) {
+						videoSprites[daVideoSprite].bitmap.pause();
+						//prevent the video from resuming on focus change in pause menu
+						if (FlxG.autoPause)
+						{
+							if (FlxG.signals.focusGained.has(videoSprites[daVideoSprite].bitmap.resume))
+								FlxG.signals.focusGained.remove(videoSprites[daVideoSprite].bitmap.resume);
+
+							if (FlxG.signals.focusLost.has(videoSprites[daVideoSprite].bitmap.pause))
+								FlxG.signals.focusLost.remove(videoSprites[daVideoSprite].bitmap.pause);
+						}
+					}
+				}
+				#end
 
 				if(FlxG.sound.music != null) {
 					FlxG.sound.music.pause();
@@ -2251,12 +2266,25 @@ class PlayState extends MusicBeatState
 
 				persistentUpdate = false;
 				persistentDraw = false;
+				#if LUA_ALLOWED
 				for (tween in modchartTweens) {
 					tween.active = true;
 				}
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
+				#end
+				#if VIDEOS_ALLOWED
+				//i assume it's better removing the thing on gameover
+				if(videoSprites.length > 0) {
+					for(daVideoSprite in 0...videoSprites.length) {
+						videoSprites[daVideoSprite].bitmap.onEndReached();
+						videoSprites[daVideoSprite].kill();
+					}
+					for(i in videoSprites) 
+						videoSprites.remove(i);
+				}
+				#end
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y, 
 					songScore, songMisses, Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC));
 				
@@ -2999,6 +3027,16 @@ class PlayState extends MusicBeatState
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = (!ClientPrefs.hideHud && showComboNum);
 
+			if (curStage == 'snow') 
+			{
+				new FlxTimer().start(0.3, (tmr:FlxTimer) -> 
+				{
+					comboSpr.acceleration.x = -1250;
+					rating.acceleration.x = -1250;
+					numScore.acceleration.x = -1250;
+				});
+			}
+
 			if(combo >= 0)
 			{
 				insert(members.indexOf(strumLineNotes), numScore);
@@ -3044,7 +3082,7 @@ class PlayState extends MusicBeatState
 		var eventKey:FlxKey = event.keyCode;
 		var key:Int = getKeyFromEvent(eventKey);
 
-		if (!cpuControlled && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
+		if (!cpuControlled && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED)))
 		{
 			if(!boyfriend.stunned && generatedMusic && !endingSong)
 			{
@@ -3158,20 +3196,6 @@ class PlayState extends MusicBeatState
 		var down = controls.NOTE_DOWN;
 		var left = controls.NOTE_LEFT;
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
-		
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.controllerMode)
-		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
-			if(controlArray.contains(true))
-			{
-				for (i in 0...controlArray.length)
-				{
-					if(controlArray[i])
-						onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[i][0]));
-				}
-			}
-		}
 
 		if (!boyfriend.stunned && generatedMusic)
 		{
@@ -3196,20 +3220,6 @@ class PlayState extends MusicBeatState
 			else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
 				boyfriend.dance();
-			}
-		}
-
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.controllerMode)
-		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
-			if(controlArray.contains(true))
-			{
-				for (i in 0...controlArray.length)
-				{
-					if(controlArray[i])
-						onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[i][0]));
-				}
 			}
 		}
 	}
@@ -3505,11 +3515,20 @@ class PlayState extends MusicBeatState
 		cpp.vm.Gc.enable(true);
 		#end
 
-		if(!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+		#if VIDEOS_ALLOWED
+		if(videoSprites.length > 0) {
+			for(daVideoSprite in 0...videoSprites.length) {
+				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
+				videoSprites[daVideoSprite].kill(); //some sort of optmization
+			}
+			for(i in videoSprites)
+				videoSprites.remove(i); //clearing
 		}
+		#end
+
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+
 		super.destroy();
 	}
 

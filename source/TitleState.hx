@@ -19,7 +19,6 @@ import sys.io.File;
 import options.GraphicsSettingsSubState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
-import flixel.input.gamepad.FlxGamepad;
 #if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;
 #else
@@ -261,19 +260,6 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
-
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.START)
-				pressedEnter = true;
-
-			#if switch
-			if (gamepad.justPressed.B)
-				pressedEnter = true;
-			#end
-		}
 
 		if (initialized && !transitioning && skippedIntro)
 		{
