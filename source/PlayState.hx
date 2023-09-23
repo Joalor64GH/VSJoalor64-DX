@@ -3135,6 +3135,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	// what kind of code bruh :skull:
 	private function getKeyFromEvent(key:FlxKey):Int
 	{
 		if(key != NONE)

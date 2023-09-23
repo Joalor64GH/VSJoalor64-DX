@@ -128,6 +128,9 @@ class FreeplayState extends MusicBeatState
 		menuBG.color = CoolUtil.colorFromString(controlStrings[curSelected].color);
 		intendedColor = menuBG.color;
 
+		if(curSelected >= controlStrings.length) 
+			curSelected = 0;
+			
         	changeSelection();
 
 		super.create();
