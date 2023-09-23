@@ -56,7 +56,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			+ ' // ' + rate + ' (' + combo + ')'
 		, 12);
 		resultsTxt.scrollFactor.set();
-		resultsTxt.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		resultsTxt.setFormat("VCR OSD Mono", 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		resultsTxt.updateHitbox();
 		add(resultsTxt);
 
