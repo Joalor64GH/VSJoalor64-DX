@@ -3347,7 +3347,7 @@ class PlayState extends MusicBeatState
 				}
 
 				switch(note.noteType) {
-					case 'Hurt Note': //Hurt note
+					case 'Hurt Note' | 'Sand Note': //Hurt and Sand note
 						if(boyfriend.animation.getByName('hurt') != null) {
 							boyfriend.playAnim('hurt', true);
 							boyfriend.specialAnim = true;

@@ -111,6 +111,19 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+				case 'Sand Note':
+					ignoreNote = mustPress;
+					reloadNote('SAND');
+					noteSplashTexture = 'SANDnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					if(isSustainNote) {
+						missHealth = 0.15;
+					} else {
+						missHealth = 0.25;
+					}
+					hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':
