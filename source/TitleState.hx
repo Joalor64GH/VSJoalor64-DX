@@ -371,6 +371,7 @@ class TitleState extends MusicBeatState
 				case 19:
 					addMoreText(curWacky[1]);
 				case 21:
+					curWacky = FlxG.random.getObject(getIntroTextShit());
 					deleteCoolText();
 					createCoolText([curWacky[0]]);
 				case 23:
