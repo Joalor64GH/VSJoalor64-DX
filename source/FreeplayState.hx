@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -10,10 +11,14 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.display.FlxBackdrop;
 import flixel.tweens.FlxTween;
 
+import Password;
+import PlayState;
+
 using StringTools;
 
 /*
  * Mostly copied from MinigamesState.hx
+ * @author Joalor64GH
  * @see https://github.com/Joalor64GH/Joalor64-Engine-Rewrite/blob/main/source/meta/state/MinigamesState.hx
  */
 class FreeplayState extends MusicBeatState 
@@ -28,11 +33,12 @@ class FreeplayState extends MusicBeatState
 		new CoolSong('Imagination', 'This song could be better.', 'memphis', '00f2ff'),
 		new CoolSong('The Finale', 'bang bang', 'memphis', '00f2ff'),
 		new CoolSong('Klassicheskiy Ritm', 'Bounds round', 'circle', '0004ff'), // and i'll add some for him :)
+		/*
+		new CoolSong('Circle Song 2', 'description', 'circle', '0004ff'),
+		new CoolSong('Circle Song 3', 'description', 'circle', '0004ff'),
+		*/
 		new CoolSong('Test', 'quick test song idk', 'bf-pixel', '59d0ff')
 	];
-
-	// saving this for later
-	public static var passwordCorrect:Bool;
 	
 	var lerpScore:Int = 0;
 	var lerpRating:Float = 0;
@@ -53,6 +59,23 @@ class FreeplayState extends MusicBeatState
 
     	override function create()
 	{
+		// this is for testing!!
+		/*
+		if (PlayState.bonusUnlock)
+		{
+			controlStrings.push(new CoolSong('Bonus 1', 'Hello World', 'face', 'adadad'))
+			controlStrings.push(new CoolSong('Bonus 2', 'Hello World', 'face', 'adadad'))
+			controlStrings.push(new CoolSong('Bonus 3', 'Hello World', 'face', 'adadad'))
+			if (Password.passwordCorrect)
+			{
+				controlStrings.push(new CoolSong('Bonus 4', 'Hello World', 'face', 'adadad'))
+			}
+			else
+			{
+				controlStrings.push(new CoolSong('???', 'This song requires a password!', 'face', 'adadad'))
+			}
+		}
+		*/
 		menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         	menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
@@ -80,16 +103,8 @@ class FreeplayState extends MusicBeatState
 			controlLabel.targetY = i - curSelected;
 			grpControls.add(controlLabel);
 
-			if (controlLabel.width > 980)
-			{
-				var textScale:Float = 980 / controlLabel.width;
-				controlLabel.scale.x = textScale;
-				for (letter in controlLabel.lettersArray)
-				{
-					letter.x *= textScale;
-					letter.offset.x *= textScale;
-				}
-			}
+			if (songText.width > 980)
+				songText.scale.x = 980 / songText.width;
 
             		var icon:HealthIcon = new HealthIcon(controlStrings[i].icon);
 			icon.sprTracker = controlLabel;
@@ -175,6 +190,14 @@ class FreeplayState extends MusicBeatState
             
 		if (controls.ACCEPT)
 		{
+			/*
+			if (contolStrings[curSelected] == '???')
+			{
+				openSubState(new Password());
+			}
+			else
+			{
+			*/
 			FlxG.sound.music.volume = 0;
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
@@ -182,6 +205,7 @@ class FreeplayState extends MusicBeatState
 			LoadingState.loadAndSwitchState(new PlayState());
 			PlayState.SONG = Song.loadFromJson(formatIdfk, lowercasePlz);
 			PlayState.isStoryMode = false;
+			// }
 		}
 
         	if (FlxG.keys.justPressed.CONTROL)

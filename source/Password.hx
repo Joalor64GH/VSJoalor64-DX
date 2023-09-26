@@ -1,14 +1,14 @@
-package data;
+package;
 
 import flixel.*;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import FreeplayState;
 
 using StringTools;
 
 /**
+ * A password class for the bonus songs
  * @author bbpanzu
  * @see https://github.com/bbpanzu/vswhitty-public
  */
@@ -16,6 +16,9 @@ using StringTools;
 class PasswordPrompt extends MusicBeatSubstate // will probably be used later
 {
 	var input:FlxUIInputText;
+
+	// saving this for later
+	public static var passwordCorrect:Bool;
 
 	public function new() 
 	{
@@ -48,7 +51,12 @@ class PasswordPrompt extends MusicBeatSubstate // will probably be used later
 		super.update(elapsed);
         	input.hasFocus = true;
 
-		if (controls.ACCEPT) {
+		if (controls.ACCEPT/* && input.text.toLowerCase() == "password"*/) {
+			/*
+			passwordCorrect = true;
+			FlxG.save.data.passwordCorrect = true;
+			FlxG.save.flush();
+			*/
 			FlxG.mouse.visible = false;
 			FlxG.state.closeSubState();
 		}
