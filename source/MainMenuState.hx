@@ -208,6 +208,7 @@ class MainMenuState extends MusicBeatState
 				if (optionShit[curSelected] == 'ost')
 				{
 					// placeholder link until the actual ost comes out
+					// MusicBeatState.switchState(new MusicPlayerState());
 					CoolUtil.browserLoad('https://www.youtube.com/playlist?list=PLxj2uzHFxP2Z4LZymCMwCDqEe3OsX1poD');
 				}
 				else if (optionShit[curSelected] == 'discord')

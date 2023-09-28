@@ -51,8 +51,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		resultsTxt = new FlxText(12, FlxG.height - 44, 0,  
 			'Score: ' + points
-			+ ' // Misses: ' + miss
-			+ ' // Rating: ' + percentage + '%'
+			+ ' // Combo Breaks: ' + miss
+			+ ' // Accuracy: ' + percentage + '%'
 			+ ' // ' + rate + ' (' + combo + ')'
 		, 12);
 		resultsTxt.scrollFactor.set();
