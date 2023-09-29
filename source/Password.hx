@@ -17,9 +17,6 @@ class PasswordPrompt extends MusicBeatSubstate // will probably be used later
 {
 	var input:FlxUIInputText;
 
-	// saving this for later
-	public static var passwordCorrect:Bool;
-
 	public function new() 
 	{
 		super();
@@ -53,7 +50,6 @@ class PasswordPrompt extends MusicBeatSubstate // will probably be used later
 
 		if (controls.ACCEPT/* && input.text.toLowerCase() == "password"*/) {
 			/*
-			passwordCorrect = true;
 			FlxG.save.data.passwordCorrect = true;
 			FlxG.save.flush();
 			*/

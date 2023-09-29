@@ -113,7 +113,7 @@ class MusicPlayerState extends MusicBeatState
 
         if (FlxG.keys.justPressed.R) 
         {
-            FlxG.resetState();
+            MusicBeatState.resetState();
         }
 
         /*if (FlxG.keys.justPressed.L) 

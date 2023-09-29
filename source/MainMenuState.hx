@@ -25,12 +25,29 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.5.2h'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '0.5.2h'; //This is used for Discord RPC
 	public static var curSelected:Int = 0;
 
-	var menuItems:FlxTypedGroup<FlxSprite>;
+	public static var firstStart:Bool = true;
+	public static var finishedFunnyMove:Bool = false;
+
+	public static var bgPaths:Array<String> = [
+		'menuBG',
+		'menuBGRed',
+		'menuBGOrange',
+		'menuBGMint',
+		'menuBGCyan',
+		'menuBGBlue',
+		'menuBGPurple',
+		'menuBGMagenta',
+		'menuBGMaroon',
+		'menuDesat'
+	];
+
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
+
+	var menuItems:FlxTypedGroup<FlxSprite>;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -48,19 +65,6 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
-
-	public static var bgPaths:Array<String> = [
-		'menuBG',
-		'menuBGRed',
-		'menuBGOrange',
-		'menuBGMint',
-		'menuBGCyan',
-		'menuBGBlue',
-		'menuBGPurple',
-		'menuBGMagenta',
-		'menuBGMaroon',
-		'menuDesat'
-	];
 
 	override function create()
 	{
@@ -127,11 +131,20 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if(optionShit.length < 6) scr = 0;
-			menuItem.scrollFactor.set(0, scr);
+			menuItem.scrollFactor.set(0, 1);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			menuItem.updateHitbox();
+			FlxTween.tween(menuItem, {x: menuItem.width / 4 + (i * 60) - 55}, 1.3, {ease: FlxEase.expoInOut});
+			if (firstStart)
+				FlxTween.tween(menuItem, {y: 60 + (i * 160)}, 1 + (i * 0.25), {
+					ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
+					{
+						finishedFunnyMove = true; 
+						changeItem();
+					}
+				});
+			else
+				menuItem.y = 60 + (i * 160);
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
@@ -181,9 +194,7 @@ class MainMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.8)
-		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
@@ -208,7 +219,6 @@ class MainMenuState extends MusicBeatState
 				if (optionShit[curSelected] == 'ost')
 				{
 					// placeholder link until the actual ost comes out
-					// MusicBeatState.switchState(new MusicPlayerState());
 					CoolUtil.browserLoad('https://www.youtube.com/playlist?list=PLxj2uzHFxP2Z4LZymCMwCDqEe3OsX1poD');
 				}
 				else if (optionShit[curSelected] == 'discord')
@@ -247,6 +257,10 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
+									/*
+									case 'ost'
+										MusicBeatState.switchState(new MusicPlayerState());
+									*/
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':

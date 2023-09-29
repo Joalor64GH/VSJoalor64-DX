@@ -436,8 +436,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Save Replays',
-			'If checked, game will save a recording of your game\nfor every song you beat.
-			Note that replays are not a video so\na replay\'s size will be pretty small.',
+			'If checked, the game will save a recording of your game\nfor every song you beat.
+			Note that replays are not a video, so\na replay\'s size will be pretty small.',
 			'saveReplay',
 			'bool',
 			true);

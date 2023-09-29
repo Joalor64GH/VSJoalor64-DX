@@ -96,12 +96,12 @@ class TitleState extends MusicBeatState
 		/*
 		if (FlxG.save.data.bonusUnlock != null)
 		{
-			PlayState.bonusUnlock = FlxG.save.data.bonusUnlock;
+			FlxG.save.data.bonusUnlock = false;
 		}
 
 		if (FlxG.save.data.passwordCorrect != null)
 		{
-			FreeplayState.passwordCorrect = FlxG.save.data.passwordCorrect;
+			FlxG.save.data.passwordCorrect = false;
 		}
 		*/
 

@@ -271,8 +271,6 @@ class PlayState extends MusicBeatState
 
 	public var comboFunction:Void->Void = null;
 
-	public static var bonusUnlock:Bool = false;
-
 	override public function create()
 	{
 		#if cpp
@@ -2711,17 +2709,7 @@ class PlayState extends MusicBeatState
 				campaignScore += songScore;
 				campaignMisses += songMisses;
 
-				storyPlaylist.remove(storyPlaylist[0]);
-
-				/*
-				if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
-				{
-					bonusUnlock = true;
-
-					FlxG.save.data.bonusUnlock = true;
-					FlxG.save.flush();
-				}
-				*/	
+				storyPlaylist.remove(storyPlaylist[0]);	
 
 				if (storyPlaylist.length <= 0)
 				{
@@ -2746,6 +2734,13 @@ class PlayState extends MusicBeatState
 						{
 							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore);
 						}
+
+						/*
+						if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
+						{
+							FlxG.save.data.bonusUnlock = true;
+						}
+						*/
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
