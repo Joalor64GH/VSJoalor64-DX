@@ -52,6 +52,7 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
+		'bios',
 		#if !switch 
 		'ost',
 		'discord', 
@@ -258,9 +259,11 @@ class MainMenuState extends MusicBeatState
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
 									/*
-									case 'ost'
+									case 'ost':
 										MusicBeatState.switchState(new MusicPlayerState());
 									*/
+									case 'bios':
+										MusicBeatState.switchState(new BiosMenuState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
