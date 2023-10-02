@@ -6,10 +6,7 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-
 import flixel.addons.display.FlxBackdrop;
 
 class BiosMenuState extends MusicBeatState 
@@ -27,6 +24,8 @@ class BiosMenuState extends MusicBeatState
 
     var descriptionText:FlxText;
     var characterName:FlxText;
+
+	var checker:FlxBackdrop;
 
 	override function create() 
 	{
