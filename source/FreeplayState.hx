@@ -134,11 +134,16 @@ class FreeplayState extends MusicBeatState
 		topPanel.alpha = 0.6;
 		add(topPanel);
 
-		var controlsTxt:FlxText = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS // ALT - REPLAYS", 32);
+		var controlsTxt:FlxText = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS", 32);
 		controlsTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		controlsTxt.screenCenter(X);
 		controlsTxt.scrollFactor.set();
 		add(controlsTxt);
+
+		#if sys
+		if (ClientPrefs.saveReplay)
+			controlsTxt.text += " // ALT - REPLAYS";
+		#end
 
 		menuBG.color = CoolUtil.colorFromString(controlStrings[curSelected].color);
 		intendedColor = menuBG.color;
