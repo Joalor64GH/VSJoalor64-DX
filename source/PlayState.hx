@@ -243,7 +243,7 @@ class PlayState extends MusicBeatState
 	var detailsPausedText:String = "";
 	#end
 
-		var inReplay:Bool;
+	var inReplay:Bool;
 
 	//Achievement shit
 	var keysPressed:Array<Bool> = [];
@@ -285,7 +285,7 @@ class PlayState extends MusicBeatState
 		// for lua
 		instance = this;
 
-				if (!inReplay)
+		if (!inReplay)
 		{
 			ReplayState.hits = [];
 			ReplayState.miss = [];
@@ -378,13 +378,9 @@ class PlayState extends MusicBeatState
 		#if desktop
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
-		{
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
-		}
 		else
-		{
 			detailsText = "Freeplay";
-		}
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
@@ -1014,12 +1010,12 @@ class PlayState extends MusicBeatState
   	public function removeShaderFromCamera(cam:String,effect:ShaderEffect){
 		switch(cam.toLowerCase()) {
 			case 'camhud' | 'hud': 
-    			camHUDShaders.remove(effect);
-    			var newCamEffects:Array<BitmapFilter>=[];
-    			for(i in camHUDShaders){
-      				newCamEffects.push(new ShaderFilter(i.shader));
-    			}
-    			camHUD.setFilters(newCamEffects);
+    				camHUDShaders.remove(effect);
+    				var newCamEffects:Array<BitmapFilter>=[];
+    				for(i in camHUDShaders){
+      					newCamEffects.push(new ShaderFilter(i.shader));
+    				}
+    				camHUD.setFilters(newCamEffects);
 			case 'camother' | 'other': 
 				camOtherShaders.remove(effect);
 				var newCamEffects:Array<BitmapFilter>=[];
