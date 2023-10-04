@@ -2,12 +2,11 @@ package;
 
 import haxe.Json;
 import openfl.events.KeyboardEvent;
+import openfl.utils.Assets;
 
 #if sys
 import sys.io.File;
 #end
-
-import openfl.utils.Assets;
 
 using DateTools;
 using StringTools;
@@ -22,12 +21,12 @@ typedef ReplayFile = {
 
 class ReplayState extends PlayState
 {
-    public var _song:String;
-
     public static var hits:Array<Null<Float>> = [];
     public static var miss:Array<Array<Null<Float>>> = [];
     public static var judgements:Array<Null<Float>> = [];
     public static var sustainHits:Array<Int> = [];
+
+    public var _song:String;
 
     public function new()
     {
@@ -111,15 +110,15 @@ class ReplayState extends PlayState
 
     override function keyShit():Void
     {
-		var char:Character = PlayState.instance.boyfriend;
+	var char:Character = PlayState.instance.boyfriend;
 
         if (char.holdTimer > Conductor.stepCrochet * char.singDuration * 0.001)
-		{
-			if (char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss'))
-			{
-				char.dance();
-			}
-		}
+	{
+	    if (char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss'))
+	    {
+		char.dance();
+	    }
+	}
     }
 
     override function popUpScore(?note:Note, ?rating:Float):Void
@@ -132,20 +131,20 @@ class ReplayState extends PlayState
     {
         var spr:StrumNote = null;
 
-		if (isDad) 
-			spr = strumLineNotes.members[noteData];
-		else 
-			spr = playerStrums.members[noteData];
+	if (isDad) 
+	    spr = strumLineNotes.members[noteData];
+	else 
+	    spr = playerStrums.members[noteData];
 
-		spr.playAnim('confirm', true);
-		spr.resetAnim = 0.15;
+	spr.playAnim('confirm', true);
+	spr.resetAnim = 0.15;
     }
 
     override function StrumPress(id:Int, ?time:Float):Void
     {
-		var spr:StrumNote = playerStrums.members[id];
-		spr.playAnim('pressed');
-		spr.resetAnim = 0.2;
+	var spr:StrumNote = playerStrums.members[id];
+	spr.playAnim('pressed');
+	spr.resetAnim = 0.2;
     }
 
     function getNoteID(time:Float):Int
