@@ -117,6 +117,25 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
+		/*
+		var star:Array<FlxSprite> = [];
+		for (i in 0...3)
+		{
+			var gfx = 'endstar';
+			if (!FlxG.save.data.stars[i]) gfx += '_e';
+
+			star[i] = new FlxSprite().loadGraphic(Paths.image(gfx));
+			star[i].scrollFactor.set();
+			star[i].screenCenter(X);
+			star[i].y = 0;
+			star[i].x += (i - 1) * 90;
+			star[i].scale.x = 0.75;
+			star[i].scale.y = 0.75;
+			star[i].antialiasing = true;
+			add(star[i]);
+		}
+		*/
+
 		var scale:Float = 1;
 
 		for (i in 0...optionShit.length)

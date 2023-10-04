@@ -2739,6 +2739,7 @@ class PlayState extends MusicBeatState
 						if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
 						{
 							FlxG.save.data.bonusUnlock = true;
+							FlxG.save.data.stars[0] = true;
 						}
 						*/
 
@@ -2771,6 +2772,18 @@ class PlayState extends MusicBeatState
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
 				}
+
+				/*
+				if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
+				{
+					FlxG.save.data.stars[1] = true;
+				}
+				else if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
+				{
+					FlxG.save.data.stars[2] = true;
+				}
+				FlxG.save.flush();
+				*/
 
 				new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 					persistentUpdate = true;

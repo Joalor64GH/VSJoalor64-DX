@@ -94,15 +94,14 @@ class TitleState extends MusicBeatState
 
 		// saving these for later
 		/*
-		if (FlxG.save.data.bonusUnlock != null)
-		{
+		if (FlxG.save.data.bonusUnlock == null)
 			FlxG.save.data.bonusUnlock = false;
-		}
 
-		if (FlxG.save.data.passwordCorrect != null)
-		{
+		if (FlxG.save.data.passwordCorrect == null)
 			FlxG.save.data.passwordCorrect = false;
-		}
+
+		if (FlxG.save.data.stars == null)
+			FlxG.save.data.stars = [false, false, false];
 		*/
 
 		FlxG.mouse.visible = false;
