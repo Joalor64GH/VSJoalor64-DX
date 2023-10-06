@@ -17,9 +17,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
-import Achievements;
-import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+
+import Achievements;
 
 using StringTools;
 
@@ -62,7 +62,7 @@ class MainMenuState extends MusicBeatState
 	];
 
 	var bg:FlxSprite;
-	var magenta:FlxSprite;
+	var lime:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
@@ -104,15 +104,15 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 		add(camFollowPos);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.antialiasing = ClientPrefs.globalAntialiasing;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
+		lime = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		lime.scrollFactor.set(0, yScroll);
+		lime.setGraphicSize(Std.int(lime.width * 1.175));
+		lime.updateHitbox();
+		lime.screenCenter();
+		lime.visible = false;
+		lime.antialiasing = ClientPrefs.globalAntialiasing;
+		lime.color = 0xFF00ff00;
+		add(lime);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -122,7 +122,7 @@ class MainMenuState extends MusicBeatState
 		for (i in 0...3)
 		{
 			var gfx = 'endstar';
-			if (!FlxG.save.data.stars[i]) gfx += '_e';
+			if (!SaveFileState.saveFile.data.stars[i]) gfx += '_e';
 
 			star[i] = new FlxSprite().loadGraphic(Paths.image(gfx));
 			star[i].scrollFactor.set();
@@ -154,6 +154,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set(0, 1);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			menuItem.updateHitbox();
+			if (optionShit[i] == '') menuItem.visible = false;
 			FlxTween.tween(menuItem, {x: menuItem.width / 4 + (i * 60) - 55}, 1.3, {ease: FlxEase.expoInOut});
 			if (firstStart)
 				FlxTween.tween(menuItem, {y: 60 + (i * 160)}, 1 + (i * 0.25), {
@@ -166,6 +167,8 @@ class MainMenuState extends MusicBeatState
 			else
 				menuItem.y = 60 + (i * 160);
 		}
+
+		firstStart = false;
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
@@ -236,6 +239,11 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
+				if (optionShit[curSelected] == '')
+				{
+					return;
+				}
+				
 				if (optionShit[curSelected] == 'ost')
 				{
 					// placeholder link until the actual ost comes out
@@ -251,7 +259,7 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+					if(ClientPrefs.flashing) FlxFlicker.flicker(lime, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -297,7 +305,7 @@ class MainMenuState extends MusicBeatState
 			else if (FlxG.keys.anyJustPressed(debugKeys))
 			{
 				selectedSomethin = true;
-				MusicBeatState.switchState(new MasterEditorMenu());
+				MusicBeatState.switchState(new editors.MasterEditorMenu());
 			}
 			#end
 		}
@@ -309,12 +317,15 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(huh:Int = 0)
 	{
-		curSelected += huh;
+		if (finishedFunnyMove)
+		{
+			curSelected += huh;
 
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
+			if (curSelected >= menuItems.length)
+				curSelected = 0;
+			if (curSelected < 0)
+				curSelected = menuItems.length - 1;	
+		}
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
