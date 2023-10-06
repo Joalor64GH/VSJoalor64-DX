@@ -271,6 +271,9 @@ class PlayState extends MusicBeatState
 
 	public var comboFunction:Void->Void = null;
 
+	// Smooth healthbar
+	var smoothHealth:Float = 1;
+
 	override public function create()
 	{
 		#if cpp
@@ -725,7 +728,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 2);
+			'smoothHealth', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
@@ -1885,6 +1888,8 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+
+		smoothHealth = FlxMath.lerp(smoothHealth, health, CoolUtil.boundTo(elapsed * 20, 0, 1));
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'NPS: ' + nps + ' (Max ' + maxNPS + ')'
