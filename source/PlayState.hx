@@ -2739,8 +2739,8 @@ class PlayState extends MusicBeatState
 						/*
 						if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
 						{
-							FlxG.save.data.bonusUnlock = true;
-							FlxG.save.data.stars[0] = true;
+							SaveFileState.saveFile.data.bonusUnlock = true;
+							SaveFileState.saveFile.data.stars[0] = true;
 						}
 						*/
 
@@ -2777,11 +2777,11 @@ class PlayState extends MusicBeatState
 				/*
 				if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
 				{
-					FlxG.save.data.stars[1] = true;
+					SaveFileState.saveFile.data.stars[1] = true;
 				}
 				else if (PlayState.SONG.song.toLowerCase() == 'placeholder') 
 				{
-					FlxG.save.data.stars[2] = true;
+					SaveFileState.saveFile.data.stars[2] = true;
 				}
 				FlxG.save.flush();
 				*/

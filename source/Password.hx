@@ -50,7 +50,7 @@ class PasswordPrompt extends MusicBeatSubstate // will probably be used later
 
 		if (controls.ACCEPT/* && input.text.toLowerCase() == "password"*/) {
 			/*
-			FlxG.save.data.passwordCorrect = true;
+			SaveFileState.saveFile.data.passwordCorrect = true;
 			FlxG.save.flush();
 			*/
 			FlxG.mouse.visible = false;

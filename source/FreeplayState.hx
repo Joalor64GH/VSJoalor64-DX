@@ -61,12 +61,12 @@ class FreeplayState extends MusicBeatState
 	{
 		// this is for testing!!
 		/*
-		if (FlxG.save.data.bonusUnlock)
+		if (SaveFileState.saveFile.data.bonusUnlock)
 		{
 			controlStrings.push(new CoolSong('Bonus 1', 'Hello World', 'face', 'adadad'));
 			controlStrings.push(new CoolSong('Bonus 2', 'Hello World', 'face', 'adadad'));
 			controlStrings.push(new CoolSong('Bonus 3', 'Hello World', 'face', 'adadad'));
-			if (FlxG.save.data.passwordCorrect)
+			if (SaveFileState.saveFile.data.passwordCorrect)
 			{
 				controlStrings.push(new CoolSong('Bonus 4', 'Hello World', 'face', 'adadad'));
 			}
