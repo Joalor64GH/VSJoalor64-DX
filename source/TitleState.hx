@@ -34,6 +34,26 @@ import openfl.Assets;
 
 using StringTools;
 
+class SpecialData
+{
+	public static function initData()
+	{
+		// saving these for later
+		/*
+		if (FlxG.save.data.bonusUnlock == null)
+			FlxG.save.data.bonusUnlock = false;
+
+		if (FlxG.save.data.passwordCorrect == null)
+			FlxG.save.data.passwordCorrect = false;
+
+		if (FlxG.save.data.stars == null)
+			FlxG.save.data.stars = [false, false, false];
+		*/
+
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+	}
+}
+
 class TitleState extends MusicBeatState
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
@@ -43,11 +63,13 @@ class TitleState extends MusicBeatState
 	public static var initialized:Bool = false;
 
 	var bg:FlxSprite;
-	var blackScreen:FlxSprite;
-	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
-	var textGroup:FlxGroup;
 	var itsUsLmao:FlxSprite;
+	var blackScreen:FlxSprite;
+
+	var credGroup:FlxGroup;
+	var textGroup:FlxGroup;
+
+	var credTextShit:Alphabet;
 
 	var curWacky:Array<String> = [];
 
@@ -76,11 +98,9 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap2();
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		SpecialData.initData();
 		
 		ClientPrefs.loadPrefs();
-		
-		Highscore.load();
 
 		if(!initialized && FlxG.save.data != null && FlxG.save.data.fullscreen)
 		{
@@ -91,18 +111,6 @@ class TitleState extends MusicBeatState
 		{
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
-
-		// saving these for later
-		/*
-		if (FlxG.save.data.bonusUnlock == null)
-			FlxG.save.data.bonusUnlock = false;
-
-		if (FlxG.save.data.passwordCorrect == null)
-			FlxG.save.data.passwordCorrect = false;
-
-		if (FlxG.save.data.stars == null)
-			FlxG.save.data.stars = [false, false, false];
-		*/
 
 		FlxG.mouse.visible = false;
 
