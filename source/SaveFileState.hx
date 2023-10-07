@@ -3,9 +3,10 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.effects.FlxFlicker;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
+
+import flixel.effects.FlxFlicker;
 
 class SaveFileState extends MusicBeatState
 {
@@ -13,7 +14,6 @@ class SaveFileState extends MusicBeatState
 		0x00000000, // Transparent
 		0xFFFFFFFF, // White
 		0xFF808080, // Gray
-		0xFF000000, // Black
 		0xFF008000, // Green
 		0xFF00FF00, // Lime
 		0xFFFFFF00, // Yellow
