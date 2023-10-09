@@ -82,10 +82,17 @@ class SaveFileState extends MusicBeatState
 			grpControls.add(controlLabel);
 		}
 
+		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files (does not actually work yet)', 12);
+		versionTxt.scrollFactor.set();
+		versionTxt.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionTxt);
+
         selectorLeft = new Alphabet(0, 0, '>', true, false);
 		add(selectorLeft);
 		selectorRight = new Alphabet(0, 0, '<', true, false);
 		add(selectorRight);
+
+		FlxG.mouse.visible = true;
 
 		changeSelection();
 
@@ -105,6 +112,7 @@ class SaveFileState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
+				FlxG.mouse.visible = false;
 				if (curSelected != (grpControls.length - 1))
 				{
 					if (!deleteMode)
@@ -162,6 +170,16 @@ class SaveFileState extends MusicBeatState
 						changeSelection(curSelected);
 					}
 				}
+			}
+
+			// this doesn't actually do anything yet
+			if (controls.RESET && !deleteMode && !selectedSomething) 
+			{
+				openSubState(new Prompt('This action will reset ALL of your save files.\nProceed anyways?', 0, function() {
+					return;
+				}, function() {
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+				}, false));
 			}
 		}
 	}
