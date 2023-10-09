@@ -3,11 +3,11 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.text.FlxText;
+import flixel.effects.FlxFlicker;
+import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
-
-import flixel.effects.FlxFlicker;
+import flixel.text.FlxText;
 
 class SaveFileState extends MusicBeatState
 {
@@ -41,8 +41,6 @@ class SaveFileState extends MusicBeatState
 	var selectedSomething:Bool = false;
     	var emptySave:Array<Bool> = [true, true, true];
 
-    	var timeElapsed:Float = 0;
-
     	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
@@ -55,8 +53,6 @@ class SaveFileState extends MusicBeatState
 
 		menuBG = new FlxSprite().loadGraphic(Paths.image('menuBGSaves'));
         	menuBG.color = randomizeColor();
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
 
@@ -83,9 +79,9 @@ class SaveFileState extends MusicBeatState
 			grpControls.add(controlLabel);
 		}
 
-		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files (does not actually work yet)', 12);
+		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files', 12);
 		versionTxt.scrollFactor.set();
-		versionTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionTxt.setFormat(Paths.font("comic.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);
 
         	selectorLeft = new Alphabet(0, 0, '>', true, false);
@@ -102,8 +98,6 @@ class SaveFileState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		timeElapsed += elapsed;
-
 		super.update(elapsed);
 
 		if (!selectedSomething)
@@ -131,15 +125,30 @@ class SaveFileState extends MusicBeatState
 							}
 							else
 							{
-								FlxFlicker.flicker(fuk, 1, 0.06, false, false, function(flick:FlxFlicker)
+								if (ClientPrefs.flashing)
 								{
-									saveFile = new FlxSave();
-									saveFile.bind("CoolSaveFile" + Std.string(curSelected), "saves");
-									saveFile.data.init = true;
-									saveFile.flush();
-									Highscore.load();
-									MusicBeatState.switchState(new MainMenuState());
-								});
+									FlxFlicker.flicker(fuk, 1, 0.06, false, false, function(flick:FlxFlicker)
+									{
+										saveFile = new FlxSave();
+										saveFile.bind("CoolSaveFile" + Std.string(curSelected), "saves");
+										saveFile.data.init = true;
+										saveFile.flush();
+										Highscore.load();
+										MusicBeatState.switchState(new MainMenuState());
+									});
+								}
+								else
+								{
+									new FlxTimer().start(1, function(tmr:FlxTimer)
+									{
+										saveFile = new FlxSave();
+										saveFile.bind("CoolSaveFile" + Std.string(curSelected), "saves");
+										saveFile.data.init = true;
+										saveFile.flush();
+										Highscore.load();
+										MusicBeatState.switchState(new MainMenuState());
+									});
+								}
 							}
 						}
 					}
@@ -173,11 +182,13 @@ class SaveFileState extends MusicBeatState
 				}
 			}
 
-			// this doesn't actually do anything yet
-			if (controls.RESET && !deleteMode && !selectedSomething) 
+			if (controls.RESET && !deleteMode) 
 			{
 				openSubState(new Prompt('This action will reset ALL of your save files.\nProceed anyways?', 0, function() {
-					FlxG.sound.play(Paths.sound('cancelMenu'));
+					for (i in 0...3) {
+						eraseSave(i);
+					}
+					FlxG.sound.play(Paths.sound('confirmMenu'));
 				}, function() {
 					FlxG.sound.play(Paths.sound('cancelMenu'));
 				}, false));
