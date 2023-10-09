@@ -186,7 +186,7 @@ class SaveFileState extends MusicBeatState
 			{
 				openSubState(new Prompt('This action will reset ALL of your save files.\nProceed anyways?', 0, function() {
 					for (i in 0...3) {
-						eraseSave(savesCanDelete[i]);
+						eraseSave(i);
 					}
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 				}, function() {
@@ -207,6 +207,10 @@ class SaveFileState extends MusicBeatState
 		trace("Erased Save File " + (id + 1));
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
+
+		Highscore.songScores.clear();
+        Highscore.songRating.clear();
+        Highscore.weekScores.clear();
 
 		emptySave[id] = true;
 		controlsStrings[id] = "Save File " + Std.string(id + 1) + " Empty";
