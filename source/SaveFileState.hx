@@ -12,7 +12,6 @@ import flixel.text.FlxText;
 class SaveFileState extends MusicBeatState
 {
 	public static var coolColors:Array<FlxColor> = [
-		0x00000000, // Transparent
 		0xFFFFFFFF, // White
 		0xFF808080, // Gray
 		0xFF008000, // Green
@@ -208,6 +207,7 @@ class SaveFileState extends MusicBeatState
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
 
+		// this resets all of the saves highscores for some reason??
 		Highscore.songScores.clear();
         Highscore.songRating.clear();
         Highscore.weekScores.clear();
