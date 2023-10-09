@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
 
@@ -27,22 +28,22 @@ class SaveFileState extends MusicBeatState
 		0xFF00FFFF // Cyan
 	];
 
-    public static var saveFile:FlxSave;
+    	public static var saveFile:FlxSave;
 
-    private var grpControls:FlxTypedGroup<Alphabet>;
+    	private var grpControls:FlxTypedGroup<Alphabet>;
 
-    var controlsStrings:Array<String> = [];
+    	var controlsStrings:Array<String> = [];
 
 	var curSelected:Int = 0;
-    var savesCanDelete:Array<Int> = [];
+    	var savesCanDelete:Array<Int> = [];
 
 	var deleteMode:Bool = false;
 	var selectedSomething:Bool = false;
-    var emptySave:Array<Bool> = [true, true, true];
+    	var emptySave:Array<Bool> = [true, true, true];
 
-    var timeElapsed:Float = 0;
+    	var timeElapsed:Float = 0;
 
-    var selectorLeft:Alphabet;
+    	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
 	var menuBG:FlxSprite;
@@ -53,7 +54,7 @@ class SaveFileState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		menuBG = new FlxSprite().loadGraphic(Paths.image('menuBGSaves'));
-        menuBG.color = randomizeColor();
+        	menuBG.color = randomizeColor();
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
@@ -87,7 +88,7 @@ class SaveFileState extends MusicBeatState
 		versionTxt.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);
 
-        selectorLeft = new Alphabet(0, 0, '>', true, false);
+        	selectorLeft = new Alphabet(0, 0, '>', true, false);
 		add(selectorLeft);
 		selectorRight = new Alphabet(0, 0, '<', true, false);
 		add(selectorRight);
@@ -176,7 +177,7 @@ class SaveFileState extends MusicBeatState
 			if (controls.RESET && !deleteMode && !selectedSomething) 
 			{
 				openSubState(new Prompt('This action will reset ALL of your save files.\nProceed anyways?', 0, function() {
-					return;
+					FlxG.sound.play(Paths.sound('cancelMenu'));
 				}, function() {
 					FlxG.sound.play(Paths.sound('cancelMenu'));
 				}, false));
@@ -261,7 +262,7 @@ class SaveFileState extends MusicBeatState
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-                selectorLeft.x = item.x - 63;
+                		selectorLeft.x = item.x - 63;
 				selectorLeft.y = item.y;
 				selectorRight.x = item.x + item.width + 15;
 				selectorRight.y = item.y;
