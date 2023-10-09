@@ -189,6 +189,13 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		super();
 
 		if(song != null && song != '') {
+			/*switch (PlayState.SONG.song.toLowerCase())
+			{
+				case 'code-and-stuff' | 'imagination' | 'the-finale':
+					FlxG.sound.playMusic(Paths.music(song), 0);
+				case 'klassicheskiy-ritm' | 'song2' | 'song3':
+					FlxG.sound.playMusic(Paths.music(song), 0);
+			}*/
 			FlxG.sound.playMusic(Paths.music(song), 0);
 			FlxG.sound.music.fadeIn(2, 0, 1);
 		}

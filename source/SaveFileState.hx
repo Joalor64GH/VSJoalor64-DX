@@ -85,7 +85,7 @@ class SaveFileState extends MusicBeatState
 
 		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files (does not actually work yet)', 12);
 		versionTxt.scrollFactor.set();
-		versionTxt.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);
 
         	selectorLeft = new Alphabet(0, 0, '>', true, false);

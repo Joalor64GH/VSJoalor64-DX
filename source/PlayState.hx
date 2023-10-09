@@ -818,6 +818,8 @@ class PlayState extends MusicBeatState
 		{
 			switch (daSong)
 			{
+				/*case 'code-and-stuff' | 'imagination' | 'the-finale' | 'klassicheskiy-ritm' | 'song2' | 'song3':
+					startDialogue(dialogueJson);*/
 				default:
 					startCountdown();
 			}
