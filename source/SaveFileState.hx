@@ -81,7 +81,7 @@ class SaveFileState extends MusicBeatState
 
 		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files', 12);
 		versionTxt.scrollFactor.set();
-		versionTxt.setFormat(Paths.font("comic.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);
 
         	selectorLeft = new Alphabet(0, 0, '>', true, false);
@@ -186,7 +186,7 @@ class SaveFileState extends MusicBeatState
 			{
 				openSubState(new Prompt('This action will reset ALL of your save files.\nProceed anyways?', 0, function() {
 					for (i in 0...3) {
-						eraseSave(i);
+						eraseSave(savesCanDelete[i]);
 					}
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 				}, function() {
