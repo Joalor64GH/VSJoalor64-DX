@@ -207,12 +207,13 @@ class SaveFileState extends MusicBeatState
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
 
-		Highscore.songScores.clear();
-        Highscore.songRating.clear();
-        Highscore.weekScores.clear();
-		save.data.songScores = Highscore.songScores;
-        save.data.songRating = Highscore.songRating;
-        save.data.weekScores = Highscore.weekScores;
+		save.data.songScores = 0;
+        save.data.songRating = 0;
+        save.data.weekScores = 0;
+
+		save.data.passwordCorrect = false;
+		save.data.bonusUnlock = false;
+		save.data.stars = [false, false, false];
 
 		emptySave[id] = true;
 		controlsStrings[id] = "Save File " + Std.string(id + 1) + " Empty";
