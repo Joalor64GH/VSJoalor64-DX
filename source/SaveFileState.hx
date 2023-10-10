@@ -50,7 +50,7 @@ class SaveFileState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		menuBG = new FlxSprite().loadGraphic(Paths.image('menuBGSaves'));
+		menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         	menuBG.color = randomizeColor();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
@@ -207,10 +207,12 @@ class SaveFileState extends MusicBeatState
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
 
-		// this resets all of the saves highscores for some reason??
 		Highscore.songScores.clear();
         Highscore.songRating.clear();
         Highscore.weekScores.clear();
+		save.data.songScores = Highscore.songScores;
+        save.data.songRating = Highscore.songRating;
+        save.data.weekScores = Highscore.weekScores;
 
 		emptySave[id] = true;
 		controlsStrings[id] = "Save File " + Std.string(id + 1) + " Empty";
