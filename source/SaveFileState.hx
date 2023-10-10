@@ -78,7 +78,7 @@ class SaveFileState extends MusicBeatState
 			grpControls.add(controlLabel);
 		}
 
-		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Press R to reset all save files', 12);
+		var versionTxt:FlxText = new FlxText(12, FlxG.height - 24, 0, 'Press R to reset all save files', 12);
 		versionTxt.scrollFactor.set();
 		versionTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionTxt);
@@ -207,8 +207,8 @@ class SaveFileState extends MusicBeatState
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
 
-		save.data.songScores = 0;
-        save.data.songRating = 0;
+			save.data.songScores = 0;
+        	save.data.songRating = 0;
         save.data.weekScores = 0;
 
 		save.data.passwordCorrect = false;
