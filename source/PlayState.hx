@@ -403,8 +403,14 @@ class PlayState extends MusicBeatState
 					curStage = 'city-sunset';
 				case 'the-finale':
 					curStage = 'city-night';
-				case 'klassicheskiy-ritm':
+				case 'klassicheskiy-ritm' | 'song2' | 'song3' | 'bonus1':
 					curStage = 'pyramid';
+				case 'bonus2':
+					curStage = 'hills';
+				case 'bonus3':
+					curStage = 'snow';
+				case 'bonus4':
+					curStage = 'room';
 				default:
 					curStage = 'stage';
 			}

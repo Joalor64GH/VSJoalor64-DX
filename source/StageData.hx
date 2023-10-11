@@ -43,11 +43,14 @@ class StageData {
 					stage = 'city-sunset';
 				case 'the-finale':
 					stage = 'city-night';
-				case 'klassicheskiy-ritm':
+				case 'klassicheskiy-ritm' | 'song2' | 'song3' | 'bonus1':
 					stage = 'pyramid';
-				default:
-					stage = 'stage';
-			}
+				case 'bonus2':
+					stage = 'hills';
+				case 'bonus3':
+					stage = 'snow';
+				case 'bonus4':
+					stage = 'room';
 		} else {
 			stage = 'stage';
 		}

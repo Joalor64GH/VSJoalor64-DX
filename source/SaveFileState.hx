@@ -211,6 +211,7 @@ class SaveFileState extends MusicBeatState
         	save.data.songRating = 0;
         	save.data.weekScores = 0;
 
+		// i just remembered these aren't used yet, but whatever
 		save.data.passwordCorrect = false;
 		save.data.bonusUnlock = false;
 		save.data.stars = [false, false, false];
