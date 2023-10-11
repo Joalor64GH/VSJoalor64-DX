@@ -51,6 +51,9 @@ class StageData {
 					stage = 'snow';
 				case 'bonus4':
 					stage = 'room';
+				default:
+					stage = 'stage';
+			}
 		} else {
 			stage = 'stage';
 		}
