@@ -155,13 +155,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	var holdValue:Float = 0;
 	override function update(elapsed:Float)
 	{
-		if (controls.UI_UP_P)
+		if (controls.UI_UP_P || controls.UI_DOWN_P)
 		{
-			changeSelection(-1);
-		}
-		if (controls.UI_DOWN_P)
-		{
-			changeSelection(1);
+			changeSelection(controls.UI_UP_P ? -1 : 1);
 		}
 
 		if (controls.BACK) {

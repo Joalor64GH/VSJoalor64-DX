@@ -245,12 +245,7 @@ class MainMenuState extends MusicBeatState
 					return;
 				}
 				
-				if (optionShit[curSelected] == 'ost')
-				{
-					// placeholder link until the actual ost comes out
-					CoolUtil.browserLoad('https://www.youtube.com/playlist?list=PLxj2uzHFxP2Z4LZymCMwCDqEe3OsX1poD');
-				}
-				else if (optionShit[curSelected] == 'discord')
+				if (optionShit[curSelected] == 'discord')
 				{
 					// Join my server plz :))
 					CoolUtil.browserLoad('https://discord.gg/ScMB5ZX2mE');
@@ -286,10 +281,8 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
-									/*
 									case 'ost':
 										MusicBeatState.switchState(new MusicPlayerState());
-									*/
 									case 'bios':
 										MusicBeatState.switchState(new BiosMenuState());
 									case 'credits':

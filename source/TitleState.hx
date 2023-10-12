@@ -19,11 +19,6 @@ import sys.io.File;
 import options.OptionsSubState.GraphicsSettingsSubState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
-#if (flixel >= "5.3.0")
-import flixel.sound.FlxSound;
-#else
-import flixel.system.FlxSound;
-#end
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;

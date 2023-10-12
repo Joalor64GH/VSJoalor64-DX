@@ -50,6 +50,7 @@ import FunkinLua;
 import DialogueBoxPsych;
 import ReplayState.ReplayPauseSubstate;
 import Character;
+import core.ToastCore;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -282,8 +283,6 @@ class PlayState extends MusicBeatState
 		openfl.system.System.gc();
 
 		Paths.clearStoredMemory();
-
-		PauseSubState.fromPlayState = false;
 
 		// for lua
 		instance = this;
@@ -858,12 +857,29 @@ class PlayState extends MusicBeatState
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
 		callOnLuas('onCreatePost', []);
 
+		// no point if antialiasing is turned off
 		if (boyfriend.antialiasing == true)
 			boyfriend.antialiasing = ClientPrefs.globalAntialiasing;
 		if (dad.antialiasing == true)
 			dad.antialiasing = ClientPrefs.globalAntialiasing;
 		if (gf.antialiasing == true)
 			gf.antialiasing = ClientPrefs.globalAntialiasing;
+
+		switch (PlayState.SONG.song.toLowerCase())
+		{
+			case 'tutorial':
+				Main.toast.create('Tutorial', 0xFFC3215D, 'Composer: KawaiSprite');
+			case 'code-and-stuff':
+				Main.toast.create('Code and Stuff', 0xFF00F7DE, 'Composer: Joalor64');
+			case 'imagination':
+				Main.toast.create('Imagination', 0xFF00F7DE, 'Composer: Joalor64');
+			case 'the-finale':
+				Main.toast.create('The Finale', 0xFF00F7DE, 'Composer: Joalor64');
+			case 'klassicheskiy-ritm':
+				Main.toast.create('Klassicheskiy Ritm', 0xFF0004F7, 'Composer: Joalor64');
+			case 'test':
+				Main.toast.create('Test', 0xFF5FBFBF, 'Composer: KawaiSprite');
+		}
 		
 		super.create();
 

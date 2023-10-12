@@ -70,8 +70,9 @@ class MusicPlayerState extends MusicBeatState
 		songTxt.setFormat("VCR OSD Mono", 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(songTxt);
 
-        lengthTxt = new FlxText(12, FlxG.height - 24, 0, 'placeholder', 12);
+        lengthTxt = new FlxText(0, musplayer.y - 30, 0, 'placeholder', 12);
         lengthTxt.scrollFactor.set();
+        lengthTxt.screenCenter();
 		lengthTxt.setFormat("VCR OSD Mono", 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(lengthTxt);
 
@@ -120,6 +121,12 @@ class MusicPlayerState extends MusicBeatState
         {
             loop = (!loop) ? false : true;
         }*/
+
+        if (FlxG.keys.justPressed.Y)
+        {
+            // placeholder link until the actual ost comes out
+			CoolUtil.browserLoad('https://www.youtube.com/playlist?list=PLxj2uzHFxP2Z4LZymCMwCDqEe3OsX1poD');
+        }
     }
 
     /*static var loadedSongs:Array<String> = [];
