@@ -38,7 +38,7 @@ class MusicPlayerState extends MusicBeatState
     var curSelected:Int = 0;
     
     var songs:Array<Song> = [
-        {name:"Test", song:"test", disc:"test", bpm:150, 0xFF00FFFE}
+        /*{name:"Test", song:"test", disc:"test", bpm:150, 0xFF00FFFE}*/
     ];
 
     override public function create()
