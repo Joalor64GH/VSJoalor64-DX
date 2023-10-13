@@ -13,13 +13,13 @@ import Conductor;
 
 using StringTools;
 
-typedef Song = {
+/*typedef Song = {
     var name:String;
     var song:String;
     var disc:String;
     var bpm:Float;
     var col:FlxColor;
-}
+}*/
 
 class MusicPlayerState extends MusicBeatState
 {
@@ -37,9 +37,9 @@ class MusicPlayerState extends MusicBeatState
 
     var curSelected:Int = 0;
     
-    var songs:Array<Song> = [
-        /*{name:"Test", song:"test", disc:"test", bpm:150, 0xFF00FFFE}*/
-    ];
+    /* var songs:Array<Song> = [
+        {name:"Test", song:"test", disc:"test", bpm:150, 0xFF00FFFE}
+    ]; */
 
     override public function create()
     {
