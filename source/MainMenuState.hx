@@ -156,7 +156,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 			if (optionShit[i] == '') menuItem.visible = false;
 			FlxTween.tween(menuItem, {x: menuItem.width / 4 + (i * 60) - 55}, 1.3, {ease: FlxEase.expoInOut});
-			FlxTween.tween(menuItem, {y: 30 + (i * 120)}, 1 + (i * 0.25), {ease: FlxEase.expoInOut});
 			if (firstStart)
 				FlxTween.tween(menuItem, {y: 60 + (i * 160)}, 1 + (i * 0.25), {
 					ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
