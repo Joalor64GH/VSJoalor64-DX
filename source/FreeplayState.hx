@@ -192,6 +192,9 @@ class FreeplayState extends MusicBeatState
                 	FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
         	}
+
+		persistentUpdate = true;
+			persistentDraw = true;
             
 		if (controls.ACCEPT)
 		{
@@ -199,6 +202,8 @@ class FreeplayState extends MusicBeatState
 			if (contolStrings[curSelected] == '???')
 			{
 				openSubState(new Password());
+				persistentUpdate = false;
+				persistentDraw = true;
 			}
 			else
 			{
