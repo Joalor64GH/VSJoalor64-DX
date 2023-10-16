@@ -44,6 +44,17 @@ class MainMenuState extends MusicBeatState
 		'menuDesat'
 	];
 
+	public static var funny:Array<Array<String>> = [
+		['Pro Tip', "Don't spam like a freaking noob", 'ff0000'],
+		['Pro Tip', 'No tip here. Carry on.', 'ffa500'],
+		['Pro Tip', '231.46.144.199', 'ffff00'],
+		['Pro Tip', 'Press the notes.', '00ff00'],
+		['Fun Fact', 'The demo took one week to make.', '00fffe'],
+		['Fun Fact', 'I am 100 meters from your location.', '0000ff'],
+		['Fun Fact', 'The vanilla input sucks.', '5e00ff'],
+		['Fun Fact', 'Hey girl, are you a girl? Cuz you look like a girl.', 'f600ff']
+	];
+
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 
@@ -199,6 +210,15 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 		#end
+
+		// i have no idea if this will work
+		/*
+		Main.toast.create(
+			FlxG.random.getObject(funny[0]), 
+			CoolUtil.colorFromString(FlxG.random.getObject(funny[1])), 
+			FlxG.random.getObject(funny[2])
+		);
+		*/
 
 		super.create();
 	}

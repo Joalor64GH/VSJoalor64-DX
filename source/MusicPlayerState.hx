@@ -29,8 +29,8 @@ class MusicPlayerState extends MusicBeatState
     public var musplayer:FlxSprite;
     public var playerneedle:FlxSprite;
 
-    public var songTxt:FlxText;
-    public var lengthTxt:FlxText;
+    public var songTxt:Alphabet;
+    public var lengthTxt:Alphabet;
 
     // var loop:Bool = true;
     // var loaded:Bool = false;
@@ -64,17 +64,12 @@ class MusicPlayerState extends MusicBeatState
         playerneedle.antialiasing = true;
         add(playerneedle);
 
-        songTxt = new FlxText(0, 0, 0, 'Test', 72);
-        songTxt.screenCenter(X);
-        songTxt.scrollFactor.set();
-		songTxt.setFormat("VCR OSD Mono", 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(songTxt);
+        songTxt = new Alphabet(0, 0, 'test', true);
+        songTxt.setPosition(50, musplayer.y - 120);
+        add(songTxt);
 
-        lengthTxt = new FlxText(0, musplayer.y - 30, 0, 'placeholder', 12);
-        lengthTxt.scrollFactor.set();
-        lengthTxt.screenCenter();
-		lengthTxt.setFormat("VCR OSD Mono", 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(lengthTxt);
+        lengthTxt = new Alphabet(5, FlxG.height - 84, 'placeholder', true);
+        add(lengthTxt);
 
         // changeSong();
     }

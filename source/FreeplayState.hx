@@ -227,7 +227,7 @@ class FreeplayState extends MusicBeatState
 		#if sys
 		else if (FlxG.keys.justPressed.ALT && ClientPrefs.saveReplay)
 		{
-			MusicBeatState.switchState(new ReplaySelectState(controlStrings[curSelected].name));
+			MusicBeatState.switchState(new ReplaySelectState(Paths.formatToSongPath(controlStrings[curSelected].name)));
 		}
 		#end
 	}
