@@ -193,7 +193,7 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
         	}
 
-		persistentUpdate = true;
+			persistentUpdate = true;
 			persistentDraw = true;
             
 		if (controls.ACCEPT)
