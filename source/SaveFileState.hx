@@ -207,9 +207,10 @@ class SaveFileState extends MusicBeatState
 		save.bind("CoolSaveFile" + Std.string(id), "saves");
 		save.flush();
 
-		save.data.songScores = 0;
+		// this won't work >:((
+		/*save.data.songScores = 0;
 		save.data.songRating = 0;
-		save.data.weekScores = 0;
+		save.data.weekScores = 0;*/
 
 		// i just remembered these aren't used yet, but whatever
 		save.data.passwordCorrect = false;
