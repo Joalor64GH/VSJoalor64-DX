@@ -2720,14 +2720,16 @@ class PlayState extends MusicBeatState
 						CustomFadeTransition.nextCamera = null;
 					}
 
-					new FlxTimer().start(0.5, function(tmr:FlxTimer) {
-						persistentUpdate = true;
-						if (!inReplay) 
-						{
+					if (inReplay)
+						MusicBeatState.switchState(new FreeplayState());
+					else 
+					{
+						new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+							persistentUpdate = true;
 							openSubState(new ResultsSubState(sicks, goods, bads, shits, Std.int(campaignScore), Std.int(campaignMisses), 
 								Highscore.floorDecimal(ratingPercent * 100, 2), ratingName, ratingFC));
-						} 
-					});
+						});
+					}
 
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
