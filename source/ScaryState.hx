@@ -28,7 +28,7 @@ class ScaryState extends FlxState
 
     	override function update(elapsed:Float)
     	{
-        	if (FlxG.keys.justPressed.ANY)
+        	if (FlxG.keys.justPressed.ESCAPE)
         	{
             		Application.current.window.title = randomString();
             		daText.text = randomString();
