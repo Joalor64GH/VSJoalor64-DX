@@ -10,7 +10,7 @@ class BruhState extends MusicBeatState
 {
 	override function create()
     	{
-        	var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+        	var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
         	add(bg);
 
         	var no:Alphabet = new Alphabet(0, 200, 'You can unlock this in-game.', true, false);

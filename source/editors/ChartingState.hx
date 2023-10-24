@@ -424,8 +424,16 @@ class ChartingState extends MusicBeatState
 		{
 			/*if (_song.song.toLowerCase() == 'placeholder')
 			{
-				trace('bruh');
-				MusicBeatState.switchState(new BruhState());
+				if (FlxG.random.bool(30))
+				{
+					trace('oops');
+					FlxG.switchState(new ScaryState());
+				}
+				else 
+				{
+					trace('bruh');
+					MusicBeatState.switchState(new BruhState());
+				}
 			}
 			else*/
 			openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){loadJson(_song.song.toLowerCase()); }, null,ignoreWarnings));
