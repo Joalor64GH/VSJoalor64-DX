@@ -10,7 +10,7 @@ import lime.app.Application;
 
 class ScaryState extends FlxState
 {
-    var daText:FlxText;
+    	var daText:FlxText;
 
 	override function create()
     	{
@@ -20,31 +20,31 @@ class ScaryState extends FlxState
         	daText = new FlxText(4, FlxG.height - 24, 0, 'An exception occurred. Please close the software and report this error.', 12);
 		daText.scrollFactor.set();
 		daText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        daText.screenCenter(XY);
+        	daText.screenCenter(XY);
 		add(daText);
 
         	super.create();
     	}
 
-    override function update(elapsed:Float)
-    {
-        if (FlxG.keys.justPressed.ANY)
-        {
-            Application.current.window.title = randomString();
-            daText.text = randomString();
+    	override function update(elapsed:Float)
+    	{
+        	if (FlxG.keys.justPressed.ANY)
+        	{
+            		Application.current.window.title = randomString();
+            		daText.text = randomString();
 
-            // FlxG.sound.play(Paths.sound('JUMPSCARE'));
+            		// FlxG.sound.play(Paths.sound('JUMPSCARE'));
 
-            new FlxTimer().start(3.9, (tmr:FlxTimer) -> 
-		    {
+            		new FlxTimer().start(3.9, (tmr:FlxTimer) -> 
+		    	{
 			    Sys.exit(0);
-		    });
-        }
+		    	});
+        	}
 
-        super.update(elapsed);
-    }
+        	super.update(elapsed);
+    	}
 
-    static inline var upperCase:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    	static inline var upperCase:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	static inline var lowerCase:String = "abcdefghijklmnopqrstuvwxyz";
 	static inline var numbers:String = "0123456789";
 	static inline var symbols:String = "!@#$%&()*+-,./:;<=>?^[]{}";
