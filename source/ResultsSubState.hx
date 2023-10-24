@@ -93,16 +93,16 @@ class ResultsSubState extends MusicBeatSubstate
 		super.create();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-    }
+    	}
 
-    override function update(elapsed:Float) 
-    {
-	super.update(elapsed);
+    	override function update(elapsed:Float) 
+    	{
+    		super.update(elapsed);
 
-	if (controls.ACCEPT) 
-	{
-	MusicBeatState.switchState((PlayState.isStoryMode) ? new StoryMenuState() : new FreeplayState());
-	    FlxG.sound.playMusic(Paths.music('freakyMenu'));
-	}
-    }
+		if (controls.ACCEPT) 
+		{
+			MusicBeatState.switchState((PlayState.isStoryMode) ? new StoryMenuState() : new FreeplayState());
+	    		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		}
+    	}
 }
