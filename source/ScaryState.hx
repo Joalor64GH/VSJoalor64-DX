@@ -33,7 +33,7 @@ class ScaryState extends FlxState
             		Application.current.window.title = randomString();
             		daText.text = randomString();
 
-            		// FlxG.sound.play(Paths.sound('JUMPSCARE'));
+            		FlxG.sound.play(Paths.sound('JUMPSCARE'));
 
             		new FlxTimer().start(3.9, (tmr:FlxTimer) -> 
 		    	{
