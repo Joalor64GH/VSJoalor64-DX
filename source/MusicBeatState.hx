@@ -5,9 +5,7 @@ import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.util.FlxTimer;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.util.FlxColor;
 import flixel.FlxState;
-import flixel.FlxCamera;
 
 class MusicBeatState extends FlxUIState
 {
@@ -24,22 +22,12 @@ class MusicBeatState extends FlxUIState
 
 	override function create() 
 	{
+		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
 
-		if (!FlxTransitionableState.skipNextTransOut)
-		{
-			var cam:FlxCamera = new FlxCamera();
-			cam.bgColor.alpha = 0;
-			FlxG.cameras.add(cam, false);
-			cam.fade(FlxColor.BLACK, 0.7, true, function()
-			{
-				FlxTransitionableState.skipNextTransOut = false;
-			});
-		}
-		else
-		{
-			FlxTransitionableState.skipNextTransOut = false;
-		}
+		if(!skip)
+			openSubState(new CustomFadeTransition(0.7, true));
+		FlxTransitionableState.skipNextTransOut = false;
 	}
 
 	override function update(elapsed:Float)
@@ -78,25 +66,25 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
-	public static function switchState(nextState:FlxState) 
-	{
-		// i like this better
-		if (!FlxTransitionableState.skipNextTransIn)
-		{
-			var cam:FlxCamera = new FlxCamera();
-			cam.bgColor.alpha = 0;
-			FlxG.cameras.add(cam, false);
-			cam.fade(FlxColor.BLACK, 0.7, false, function()
-			{
-				FlxG.switchState(nextState);
-				FlxTransitionableState.skipNextTransIn = false;
-			});
+	public static function switchState(nextState:FlxState) {
+		// Custom made Trans in
+		var curState:Dynamic = FlxG.state;
+		var leState:MusicBeatState = curState;
+		if(!FlxTransitionableState.skipNextTransIn) {
+			leState.openSubState(new CustomFadeTransition(0.6, false));
+			if(nextState == FlxG.state) {
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.resetState();
+				};
+			} else {
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.switchState(nextState);
+				};
+			}
+			return;
 		}
-		else
-		{
-			FlxG.switchState(nextState);
-			FlxTransitionableState.skipNextTransIn = false;
-		}
+		FlxTransitionableState.skipNextTransIn = false;
+		FlxG.switchState(nextState);
 	}
 
 	public static function resetState() {
