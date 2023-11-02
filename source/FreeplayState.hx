@@ -15,20 +15,15 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxStringUtil;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.display.FlxBackdrop;
 
 using StringTools;
 
-@:access(flixel.sound.FlxSound)
 class FreeplayState extends MusicBeatState 
 {
     	private var grpControls:FlxTypedGroup<Alphabet>;
         private var iconArray:Array<HealthIcon> = [];
-	private var curPlaying:Bool = false;
-
-	public static var vocals:FlxSound = null;
 
 	public var controlStrings:Array<CoolSong> = [ // these songs will be remastered!!
 		new CoolSong('Tutorial', 'How to play the game.', 'gf', '911444'),
@@ -49,7 +44,6 @@ class FreeplayState extends MusicBeatState
 	var intendedRating:Float = 0;
 
 	var missingText:FlxText;
-	var controlsTxt:FlxText;
 	var scoreText:FlxText;
 	var descTxt:FlxText;
 
@@ -62,9 +56,6 @@ class FreeplayState extends MusicBeatState
 	var colorTween:FlxTween;
 
     	var curSelected:Int = 0;
-
-	var curTime:Float;
-	var playingMusic:Bool;
 
     	override function create()
 	{
@@ -142,7 +133,7 @@ class FreeplayState extends MusicBeatState
 		topPanel.alpha = 0.6;
 		add(topPanel);
 
-		controlsTxt = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "SPACE - LISTEN TO SONG // R - RESET SCORE // CTRL - GAMEPLAY CHANGERS", 32);
+		var controlsTxt:FlxText = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS", 32);
 		controlsTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		controlsTxt.screenCenter(X);
 		controlsTxt.scrollFactor.set();
