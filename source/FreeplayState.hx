@@ -26,7 +26,7 @@ class FreeplayState extends MusicBeatState
 {
     	private var grpControls:FlxTypedGroup<Alphabet>;
         private var iconArray:Array<HealthIcon> = [];
-		private var curPlaying:Bool = false;
+	private var curPlaying:Bool = false;
 
 	public static var vocals:FlxSound = null;
 
@@ -149,8 +149,8 @@ class FreeplayState extends MusicBeatState
 		add(controlsTxt);
 
 		missingBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-        missingBG.alpha = 0;
-        add(missingBG);
+		missingBG.alpha = 0;
+		add(missingBG);
 
 		missingText = new FlxText(0, 0, 0, '', 72);
 		missingText.scrollFactor.set();
@@ -212,8 +212,8 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
         	}
 
-			persistentUpdate = true;
-			persistentDraw = true;
+		persistentUpdate = true;
+		persistentDraw = true;
             
 		if (controls.ACCEPT)
 		{
