@@ -1,31 +1,34 @@
 package;
 
+/*
+ * Mostly copied from MinigamesState.hx
+ * @author Joalor64GH
+ * @see https://github.com/Joalor64GH/Joalor64-Engine-Rewrite/blob/main/source/meta/state/MinigamesState.hx
+ */
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.group.FlxGroup.FlxTypedGroup;
-
-import flixel.addons.display.FlxBackdrop;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-
-import Password;
-import PlayState;
+import flixel.util.FlxStringUtil;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.display.FlxBackdrop;
 
 using StringTools;
 
-/*
- * Mostly copied from MinigamesState.hx
- * @author Joalor64GH
- * @see https://github.com/Joalor64GH/Joalor64-Engine-Rewrite/blob/main/source/meta/state/MinigamesState.hx
- */
+@:access(flixel.sound.FlxSound)
 class FreeplayState extends MusicBeatState 
 {
     	private var grpControls:FlxTypedGroup<Alphabet>;
-		
         private var iconArray:Array<HealthIcon> = [];
+		private var curPlaying:Bool = false;
+
+	public static var vocals:FlxSound = null;
 
 	public var controlStrings:Array<CoolSong> = [ // these songs will be remastered!!
 		new CoolSong('Tutorial', 'How to play the game.', 'gf', '911444'),
@@ -45,10 +48,13 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
 
+	var missingText:FlxText;
+	var controlsTxt:FlxText;
 	var scoreText:FlxText;
 	var descTxt:FlxText;
 
 	var menuBG:FlxSprite;
+	var missingBG:FlxSprite;
 
 	var checker:FlxBackdrop;
 
@@ -57,9 +63,11 @@ class FreeplayState extends MusicBeatState
 
     	var curSelected:Int = 0;
 
+	var curTime:Float;
+	var playingMusic:Bool;
+
     	override function create()
 	{
-		// this is for testing!!
 		/*
 		if (SaveFileState.saveFile.data.bonusUnlock)
 		{
@@ -134,11 +142,22 @@ class FreeplayState extends MusicBeatState
 		topPanel.alpha = 0.6;
 		add(topPanel);
 
-		var controlsTxt:FlxText = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "R - RESET SCORE // CTRL - GAMEPLAY CHANGERS", 32);
+		controlsTxt = new FlxText(topPanel.x, topPanel.y + 4, FlxG.width, "SPACE - LISTEN TO SONG // R - RESET SCORE // CTRL - GAMEPLAY CHANGERS", 32);
 		controlsTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		controlsTxt.screenCenter(X);
 		controlsTxt.scrollFactor.set();
 		add(controlsTxt);
+
+		missingBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+        missingBG.alpha = 0;
+        add(missingBG);
+
+		missingText = new FlxText(0, 0, 0, '', 72);
+		missingText.scrollFactor.set();
+		missingText.setFormat("VCR OSD Mono", 60, FlxColor.RED, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingText.screenCenter(XY);
+		missingText.alpha = 0;
+		add(missingText);
 
 		#if sys
 		if (ClientPrefs.saveReplay)
@@ -208,13 +227,44 @@ class FreeplayState extends MusicBeatState
 			else
 			{
 			*/
-			FlxG.sound.music.volume = 0;
-			FlxG.sound.play(Paths.sound('confirmMenu'));
-			var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
-			var formatIdfk:String = Highscore.formatSong(lowercasePlz);
-			LoadingState.loadAndSwitchState(new PlayState());
-			PlayState.SONG = Song.loadFromJson(formatIdfk, lowercasePlz);
-			PlayState.isStoryMode = false;
+			try
+			{
+				FlxG.sound.music.volume = 0;
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
+				var formatIdfk:String = Highscore.formatSong(lowercasePlz);
+				LoadingState.loadAndSwitchState(new PlayState());
+				PlayState.SONG = Song.loadFromJson(formatIdfk, lowercasePlz);
+				PlayState.isStoryMode = false;
+			}
+			catch(e:Dynamic)
+			{
+				var errorStr:String = e.toString();
+				if(errorStr.startsWith('[file_contents,assets/data/')) 
+					errorStr = 'Missing file: ' + errorStr.substring(34, errorStr.length-1); //Missing chart
+				
+				missingText.text = 'ERROR LOADING CHART:\n$errorStr';
+
+				FlxTween.tween(missingBG, {alpha: 0.5}, 0.75, {ease: FlxEase.quadOut});
+				FlxTween.tween(missingText, {alpha: 1}, 1, {ease: FlxEase.quadOut});
+
+				// please ignore this god awful code :skull:
+				new FlxTimer().start(3, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(missingBG, {alpha: 0}, 1, {ease: FlxEase.quadOut});
+					FlxTween.tween(missingText, {alpha: 0}, 1, {ease: FlxEase.quadOut});
+
+					new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						missingText.text = '';
+					});
+				});
+
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+
+				super.update(elapsed);
+				return;
+			}
 			// }
 		}
 
