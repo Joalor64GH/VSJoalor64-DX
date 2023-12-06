@@ -13,7 +13,7 @@ using StringTools;
  * @see https://github.com/bbpanzu/vswhitty-public
  */
 
-class PasswordPrompt extends MusicBeatSubstate // will probably be used later
+class Password extends MusicBeatSubstate // will probably be used later
 {
 	var input:FlxUIInputText;
 
