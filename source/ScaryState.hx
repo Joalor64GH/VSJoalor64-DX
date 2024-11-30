@@ -1,16 +1,11 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxState;
-import flixel.FlxSprite;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import lime.app.Application;
 
 class ScaryState extends FlxState
 {
     	var daText:FlxText;
+		var triedToLeave:Bool = false;
 
 	override function create()
     	{
@@ -18,8 +13,7 @@ class ScaryState extends FlxState
         	add(bg);
 
         	daText = new FlxText(4, FlxG.height - 24, 0, 'An exception occurred. Please close the software and report this error.', 12);
-		daText.scrollFactor.set();
-		daText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		daText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         	daText.screenCenter(XY);
 		add(daText);
 
@@ -30,16 +24,24 @@ class ScaryState extends FlxState
     	{
         	if (FlxG.keys.justPressed.ESCAPE)
         	{
-            		Application.current.window.title = randomString();
-            		daText.text = randomString();
-
+				triedToLeave = true;
             		FlxG.sound.play(Paths.sound('JUMPSCARE'));
 
             		new FlxTimer().start(3.9, (tmr:FlxTimer) -> 
 		    	{
+					#if sys
 			    Sys.exit(0);
+				#else
+				openfl.system.System.exit(0);
+				#end
 		    	});
         	}
+
+			if (triedToLeave) 
+			{
+				Application.current.window.title = randomString();
+            	daText.text = randomString();
+			}
 
         	super.update(elapsed);
     	}

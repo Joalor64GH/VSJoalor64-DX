@@ -279,7 +279,7 @@ class ChartingState extends MusicBeatState
 		loadAudioBuffer();
 		reloadGridLayer();
 		loadSong();
-		Conductor.changeBPM(_song.bpm);
+		Conductor.bpm = _song.bpm;
 		Conductor.mapBPMChanges(_song);
 
 		bpmTxt = new FlxText(1000, 50, 0, "", 16);
@@ -1381,7 +1381,7 @@ class ChartingState extends MusicBeatState
 			{
 				tempBpm = nums.value;
 				Conductor.mapBPMChanges(_song);
-				Conductor.changeBPM(nums.value);
+				Conductor.bpm = nums.value;
 			}
 			else if (wname == 'note_susLength')
 			{
@@ -1434,14 +1434,6 @@ class ChartingState extends MusicBeatState
 
 	var updatedSection:Bool = false;
 
-	/* this function got owned LOL
-		function lengthBpmBullshit():Float
-		{
-			if (_song.notes[curSection].changeBPM)
-				return _song.notes[curSection].lengthInSteps * (_song.notes[curSection].bpm / _song.bpm);
-			else
-				return _song.notes[curSection].lengthInSteps;
-	}*/
 	function sectionStartTime(add:Int = 0):Float
 	{
 		var daBPM:Float = _song.bpm;
@@ -2296,7 +2288,7 @@ class ChartingState extends MusicBeatState
 
 		if (_song.notes[curSection].changeBPM && _song.notes[curSection].bpm > 0)
 		{
-			Conductor.changeBPM(_song.notes[curSection].bpm);
+			Conductor.bpm = _song.notes[curSection].bpm;
 			//trace('BPM of this section:');
 		}
 		else
@@ -2306,7 +2298,7 @@ class ChartingState extends MusicBeatState
 			for (i in 0...curSection)
 				if (_song.notes[i].changeBPM)
 					daBPM = _song.notes[i].bpm;
-			Conductor.changeBPM(daBPM);
+			Conductor.bpm = daBPM;
 		}
 
 		/* // PORT BULLSHIT, INCASE THERE'S NO SUSTAIN DATA FOR A NOTE

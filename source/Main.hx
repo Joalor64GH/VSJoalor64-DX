@@ -59,7 +59,7 @@ class Main extends Sprite
 		NativeUtil.enableDarkMode();
 		#end
 
-		FlxG.signals.preStateSwitch.add(() ->{
+		FlxG.signals.preStateSwitch.add(() -> {
 			#if cpp
 			cpp.NativeGc.run(true);
 			cpp.NativeGc.enable(true);
@@ -70,7 +70,7 @@ class Main extends Sprite
 			openfl.system.System.gc();
 		});
 
-		FlxG.signals.postStateSwitch.add(() ->{
+		FlxG.signals.postStateSwitch.add(() -> {
 			#if cpp
 			cpp.NativeGc.run(false);
 			cpp.NativeGc.enable(false);

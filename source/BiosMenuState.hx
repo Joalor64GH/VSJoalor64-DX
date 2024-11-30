@@ -25,8 +25,6 @@ class BiosMenuState extends MusicBeatState
     var descriptionText:FlxText;
     var characterName:FlxText;
 
-	var checker:FlxBackdrop;
-
 	override function create() 
 	{
 		#if desktop
@@ -40,19 +38,16 @@ class BiosMenuState extends MusicBeatState
         background.screenCenter();
         add(background);
 
-		#if (flixel_addons < "3.0.0")
-		checker = new FlxBackdrop(Paths.image('grid'), 0.2, 0.2, true, true);
-		#else
-		checker = new FlxBackdrop(Paths.image('grid'));
-		#end
-        	checker.scrollFactor.set(0.07, 0);
-        	add(checker);
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(40, 40);
+		add(grid);
 
-		imagePath = ["biosMenu/characters/sample", "biosMenu/characters/sample", "biosMenu/characters/sample"];
-        charDesc = ["This is a description text.", "This is a description text.", "This is a description text."];
-        charName = ["Sample", "Name 2", "Name 3"];
+		imagePath = ["biosMenu/characters/memphis", "biosMenu/characters/circleguy", "biosMenu/characters/original"];
+        charDesc = ["Hello! I'm Memphis!", "is circle man", "Remember him? Me neither."];
+        charName = ["Memphis", "Circle Guy", "Legacy Memphis"];
 
 		imageSprite = new FlxSprite(55, 99).loadGraphic(Paths.image("biosMenu/characters/sample"));
+		imageSprite.scale.set(0.6, 0.6);
         add(imageSprite);
 
 		characterName = new FlxText(630, 94, charName[currentIndex]);
@@ -77,9 +72,6 @@ class BiosMenuState extends MusicBeatState
 	{	
 		super.update(elapsed);
 
-		checker.x -= 0.45;
-		checker.y -= 0.16;
-
 		if (controls.UI_UP_P) 
 		{
 			currentIndex--;
@@ -89,6 +81,7 @@ class BiosMenuState extends MusicBeatState
 			}
 			remove(imageSprite);
 			imageSprite = new FlxSprite(55, 99).loadGraphic(Paths.image(imagePath[currentIndex]));
+			imageSprite.scale.set(0.6, 0.6);
 			add(imageSprite);
 			descriptionText.text = charDesc[currentIndex];
 			characterName.text = charName[currentIndex];
@@ -103,6 +96,7 @@ class BiosMenuState extends MusicBeatState
 			}
 			remove(imageSprite);
 			imageSprite = new FlxSprite(55, 99).loadGraphic(Paths.image(imagePath[currentIndex]));
+			imageSprite.scale.set(0.6, 0.6);
 			add(imageSprite);
 			descriptionText.text = charDesc[currentIndex];
 			characterName.text = charName[currentIndex];  

@@ -368,7 +368,7 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		Conductor.mapBPMChanges(SONG);
-		Conductor.changeBPM(SONG.bpm);
+		Conductor.bpm = SONG.bpm;
 
 		#if desktop
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
@@ -1473,7 +1473,7 @@ class PlayState extends MusicBeatState
 		}
 		
 		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
+		Conductor.bpm = songData.bpm;
 		
 		curSong = songData.song;
 
@@ -3553,7 +3553,7 @@ class PlayState extends MusicBeatState
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
 			{
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
+				Conductor.bpm = SONG.notes[Math.floor(curStep / 16)].bpm;
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
