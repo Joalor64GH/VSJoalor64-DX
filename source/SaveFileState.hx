@@ -11,22 +11,6 @@ import flixel.text.FlxText;
 
 class SaveFileState extends MusicBeatState
 {
-	public static var coolColors:Array<FlxColor> = [
-		0xFFFFFFFF, // White
-		0xFF808080, // Gray
-		0xFF008000, // Green
-		0xFF00FF00, // Lime
-		0xFFFFFF00, // Yellow
-		0xFFFFA500, // Orange
-		0xFFFF0000, // Red
-		0xFF800080, // Purple
-		0xFF0000FF, // Blue
-		0xFF8B4513, // Brown
-		0xFFFFC0CB, // Pink
-		0xFFFF00FF, // Magenta
-		0xFF00FFFF // Cyan
-	];
-
     	public static var saveFile:FlxSave;
 
     	private var grpControls:FlxTypedGroup<Alphabet>;
@@ -51,7 +35,7 @@ class SaveFileState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-        	menuBG.color = randomizeColor();
+        	menuBG.color = FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255));
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
 
@@ -291,11 +275,4 @@ class SaveFileState extends MusicBeatState
 			}
 		}
 	}
-
-	public static function randomizeColor()
-    	{
-		var chance:Int = FlxG.random.int(0, coolColors.length - 1);
-		var color:FlxColor = coolColors[chance];
-		return color;
-    	}
 }

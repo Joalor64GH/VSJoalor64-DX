@@ -6,7 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 class NoteSplash extends FlxSprite
 {
-	public var colorSwap:ColorSwap = null;
+	public var colorMask:ColorMask = null;
 	private var idleAnim:String;
 	private var textureLoaded:String = null;
 
@@ -18,8 +18,7 @@ class NoteSplash extends FlxSprite
 
 		loadAnims(skin);
 		
-		colorSwap = new ColorSwap();
-		shader = colorSwap.shader;
+		colorMask = new ColorMask();
 
 		setupNoteSplash(x, y, note);
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -27,19 +26,24 @@ class NoteSplash extends FlxSprite
 
 	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
+		shader = null;
 		alpha = 0.6;
 
 		if(texture == null) {
 			texture = 'noteSplashes';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+			shader = colorMask.shader;
+		}
+
+		// fucking charting state defaults
+		if(texture == 'noteSplashes') {
+			shader = colorMask.shader;
 		}
 
 		if(textureLoaded != texture) {
 			loadAnims(texture);
 		}
-		colorSwap.hue = hueColor;
-		colorSwap.saturation = satColor;
-		colorSwap.brightness = brtColor;
+		colorMask.rCol = color;
 		offset.set(10, 10);
 
 		var animNum:Int = FlxG.random.int(1, 2);

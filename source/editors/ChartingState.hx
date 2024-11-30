@@ -418,7 +418,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			/*if (_song.song.toLowerCase() == 'placeholder' && !SaveFileState.save.data.passwordCorrect)
+			if (_song.song.toLowerCase() == 'legacy' && !SaveFileState.save.data.passwordCorrect)
 			{
 				if (FlxG.random.bool(30))
 				{
@@ -431,7 +431,7 @@ class ChartingState extends MusicBeatState
 					MusicBeatState.switchState(new BruhState());
 				}
 			}
-			else*/
+			else
 			openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){loadJson(_song.song.toLowerCase()); }, null,ignoreWarnings));
 		});
 
@@ -1600,11 +1600,6 @@ class ChartingState extends MusicBeatState
 
 		if (!blockInput)
 		{
-			if (FlxG.keys.justPressed.ESCAPE)
-			{
-				autosaveSong();
-				LoadingState.loadAndSwitchState(new editors.EditorPlayState(sectionStartTime()));
-			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				autosaveSong();
@@ -2710,7 +2705,7 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-		MusicBeatState.resetState();
+		MusicBeatState.switchState(new ChartingState());
 	}
 
 	function autosaveSong():Void

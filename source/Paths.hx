@@ -20,9 +20,12 @@ import openfl.utils.Assets as Assets;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
+import haxe.io.Path;
 
 using StringTools;
+using haxe.io.Path;
 
+@:keep
 class Paths
 {
 	inline public static final SOUND_EXT = #if !web "ogg" #else "mp3" #end;
@@ -139,10 +142,7 @@ class Paths
 
 	inline public static function getPreloadPath(file:String = '')
 	{
-		var path = 'assets/$file';
-		if (currentLevel != null && Assets.exists('$currentLevel:$path'))
-			return '$currentLevel:$path';
-		return path;
+		return 'assets/$file';
 	}
 
 	inline static public function txt(key:String, ?library:String)
@@ -285,10 +285,7 @@ class Paths
 	}
 
 	inline static public function image(key:String, ?library:String):FlxGraphic
-	{
-		var returnAsset:FlxGraphic = returnGraphic(key, library);
-		return returnAsset;
-	}
+		return returnGraphic(key, library);
 	
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
@@ -308,12 +305,9 @@ class Paths
 	inline static public function font(key:String)
 	{
 		#if MODS_ALLOWED
-		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
-			return file;
-		}
+		if(FileSystem.exists(modsFont(key))) return modsFont(key);
 		#end
-		return 'assets/fonts/$key';
+		return getPath('fonts/$key');
 	}
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
