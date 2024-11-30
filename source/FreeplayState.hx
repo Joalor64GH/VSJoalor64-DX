@@ -211,7 +211,7 @@ class FreeplayState extends MusicBeatState
 			*/
 			try
 			{
-				FlxG.sound.music.volume = 0;
+				FlxG.sound.music.stop();
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				var lowercasePlz:String = Paths.formatToSongPath(controlStrings[curSelected].name);
 				var formatIdfk:String = Highscore.formatSong(lowercasePlz);

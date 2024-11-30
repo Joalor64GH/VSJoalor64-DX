@@ -24,7 +24,7 @@ class NoteSplash extends FlxSprite
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
-	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
+	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, color:FlxColor = FlxColor.WHITE) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		shader = null;
 		alpha = 0.6;
