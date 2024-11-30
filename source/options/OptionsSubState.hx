@@ -557,10 +557,6 @@ class NotesSubState extends MusicBeatSubstate
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		#if sys
-		ArtemisIntegration.setBackgroundFlxColor (bg.color);
-		#end
-
 		blackBG = new FlxSprite(posX - 25).makeGraphic(1140, 200, FlxColor.BLACK);
 		blackBG.alpha = 0.4;
 		add(blackBG);
@@ -748,8 +744,6 @@ class NotesSubState extends MusicBeatSubstate
 		add(btn8);
 
 		rgbText = new Alphabet(posX + 720, 0, "Red        Green      Blue", false);
-		rgbText.scaleX = 0.6;
-		rgbText.scaleY = 0.6;
 		add(rgbText);
 
 		changeSelection();
@@ -959,12 +953,6 @@ class NotesSubState extends MusicBeatSubstate
 
 		var item = grpNumbers.members[(selected * 3) + type];
 		item.text = Std.string(ClientPrefs.arrowRGB[selected][type]);
-
-		var add = (40 * (item.letters.length - 1)) / 2;
-		for (letter in item.letters)
-		{
-			letter.offset.x += add;
-		}
 	}
 	function updateValue(change:Float = 0) {
 		curValue += change;
@@ -983,12 +971,6 @@ class NotesSubState extends MusicBeatSubstate
 
 		var item = grpNumbers.members[(curSelected * 3) + typeSelected];
 		item.text = Std.string(roundedValue);
-
-		var add = (40 * (item.letters.length - 1)) / 2;
-		for (letter in item.letters)
-		{
-			letter.offset.x += add;
-		}
 	}
 	function updateAll() 
 	{
@@ -1008,12 +990,6 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		var item = grpNumbers.members[(curSelected * 3) + typeSelected];
 		item.text = Std.string(roundedValue);
-
-		var add = (40 * (item.letters.length - 1)) / 2;
-		for (letter in item.letters)
-		{
-			letter.offset.x += add;
-		}
 	}
 }
 
