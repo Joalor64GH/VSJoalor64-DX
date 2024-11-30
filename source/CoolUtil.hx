@@ -10,6 +10,7 @@ import sys.FileSystem;
 
 using StringTools;
 
+@:keep
 class CoolUtil
 {
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float
@@ -60,8 +61,6 @@ class CoolUtil
 			for (e in 0...splitCoolSong.length)
 				coolSong += Std.string(splitCoolSong[e+1]).toLowerCase();
 
-			coolSong = coolReplace(coolSong, 'null', '');
-
 			for (l in 0...splitSong.length)
 			{
 				var stringSong:String = Std.string(splitSong[l+1]);
@@ -73,12 +72,9 @@ class CoolUtil
 				for (l in 0...splitStringSong.length)
 					stringSong += Std.string(splitStringSong[l+1]).toLowerCase();
 
-				stringSong = coolReplace(stringSong, 'null', '');
-
 				coolSong += '$stringSong';
 			}
 
-			song = coolSong.replace(' Null', '');
 			return song;
 		}
 
@@ -121,14 +117,7 @@ class CoolUtil
 	}
 
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
-	{
-		var dumbArray:Array<Int> = [];
-		for (i in min...max)
-		{
-			dumbArray.push(i);
-		}
-		return dumbArray;
-	}
+		return [for (i in min...max) i];
 
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void {
@@ -144,11 +133,14 @@ class CoolUtil
 			Assets.getSound(file, true);
 	}
 
-	public static function browserLoad(site:String) {
+	public static function browserLoad(url:String) {
 		#if linux
-		Sys.command('/usr/bin/xdg-open', [site]);
+		var cmd = Sys.command("xdg-open", [url]);
+		if (cmd != 0)
+			cmd = Sys.command("/usr/bin/xdg-open", [url]);
+		Sys.command('/usr/bin/xdg-open', [url]);
 		#else
-		FlxG.openURL(site);
+		FlxG.openURL(url);
 		#end
 	}
 }

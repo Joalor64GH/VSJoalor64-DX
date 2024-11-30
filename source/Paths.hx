@@ -5,7 +5,7 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
-import flash.media.Sound;
+import openfl.media.Sound;
 import animateatlas.AtlasFrameMaker;
 import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;

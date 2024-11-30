@@ -4,9 +4,6 @@
 
 	<app title="Friday Night Funkin': VS Joalor64 DELUXE" file="Deluxe" packageName="com.joalor64gh.vsjoalor64dx" package="com.joalor64gh.vsjoalor64dx" main="Main" version="0.2.7" company="Joalor64GH" />
 
-	<app preloader="flixel.system.FlxPreloader" />
-	<set name="SWF_VERSION" value="11.8" />
-
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--All targets-->
@@ -44,33 +41,27 @@
 
 	<assets path="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets" exclude="*.mp3" unless="web"/>
-	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<section if="VIDEOS_ALLOWED">
-		<assets path="plugins/plugins"        	        rename="plugins/"       if="windows"/>
-		<assets path="plugins/plugins (but for mac)"	rename="plugins/"       if="mac"/>
-	</section>
 	
-	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false'/>
-	</section>
+	<assets path='mods' embed='false' if="MODS_ALLOWED" />
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
-	
-	<assets path="assets/fonts" embed='true'/>
-	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxedev set='webgl' />
+	<section if="desktop">
+		<assets path="alsoft.ini" if="windows" />
+		<assets path="alsoft.ini" rename="alsoft.conf" unless="windows" />
+	</section>
+	
+	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	
 	<haxelib name="hscript" />
-	<haxelib name="hscript-ex" />
 
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="discord_rpc" if="desktop"/>
+	<haxelib name="linc_discord-rpc" if="desktop"/>
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 
 	<!-- _______________________________ Haxe Flags ______________________________ -->
@@ -86,22 +77,13 @@
 	<!-- hxCodec Debug Stuff -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+	<haxedef name="HXCPP_GC_BIG_BLOCKS" />
 
-	<!--Enable the Flixel core recording system-->
-	<haxedef name="FLX_RECORD" />
-
-	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 
 	<section unless="debug">
-		<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 		<haxedef name="FLX_NO_DEBUG" />
-
-		<!--Enable this for Nape release builds for a serious peformance improvement-->
 		<haxedef name="NAPE_RELEASE_BUILD" />
-
-		<!-- No deprecation warnings -->
-		<haxedef name="no-deprecation-warnings"/>
 	</section>
 
 	<!--Used for Izzy Engine's crash handler-->
@@ -109,6 +91,11 @@
 		<haxedef name="HXCPP_CHECK_POINTER" />
 		<haxedef name="HXCPP_STACK_LINE" />
 	</section>
+
+	<haxedef name="hscriptPos" />
+	<haxedef name="analyzer-optimize" />
+	<haxedef name="no-deprecation-warnings" />
+	<haxedef name="message.reporting" value="pretty" />
 
 	<!-- _________________________________ Icons _______________________________ -->
 

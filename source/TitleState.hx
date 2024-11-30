@@ -107,6 +107,14 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
+		#if (hxvlc)
+		#if (hxvlc < "1.4.1")
+		hxvlc.libvlc.Handle.init();
+		#else
+		hxvlc.util.Handle.init();
+		#end
+		#end
+
 		FlxG.mouse.visible = false;
 
 		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
