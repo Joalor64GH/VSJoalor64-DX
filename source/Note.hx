@@ -246,7 +246,6 @@ class Note extends FlxSprite
 			skin = PlayState.SONG.arrowSkin;
 			if(skin == null || skin.length < 1) {
 				skin = 'NOTE_assets';
-				shader = colorMask.shader;
 			}
 		}
 
