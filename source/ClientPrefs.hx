@@ -109,7 +109,7 @@ class ClientPrefs {
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
-		FlxG.save.data.arrowRG = arrowRG;
+		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.timeBarType = timeBarType;
@@ -188,8 +188,8 @@ class ClientPrefs {
 		if(FlxG.save.data.noteOffset != null) {
 			noteOffset = FlxG.save.data.noteOffset;
 		}
-		if(FlxG.save.data.arrowRG != null) {
-			arrowRG = FlxG.save.data.arrowRG;
+		if(FlxG.save.data.arrowRGB != null) {
+			arrowRGB = FlxG.save.data.arrowRGB;
 		}
 		if(FlxG.save.data.ghostTapping != null) {
 			ghostTapping = FlxG.save.data.ghostTapping;

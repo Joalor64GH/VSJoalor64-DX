@@ -418,7 +418,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			if (_song.song.toLowerCase() == 'legacy' && !SaveFileState.save.data.passwordCorrect)
+			if (_song.song.toLowerCase() == 'legacy' && !SaveFileState.saveFile.data.passwordCorrect)
 			{
 				if (FlxG.random.bool(30))
 				{

@@ -50,8 +50,6 @@ class FreeplayState extends MusicBeatState
 	var menuBG:FlxSprite;
 	var missingBG:FlxSprite;
 
-	var checker:FlxBackdrop;
-
 	var intendedColor:FlxColor;
 	var colorTween:FlxTween;
 
@@ -79,13 +77,9 @@ class FreeplayState extends MusicBeatState
         	menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
 
-		#if (flixel_addons < "3.0.0")
-		checker = new FlxBackdrop(Paths.image('grid'), 0.2, 0.2, true, true);
-		#else
-		checker = new FlxBackdrop(Paths.image('grid'));
-		#end
-        	checker.scrollFactor.set(0.07, 0);
-        	add(checker);
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(40, 40);
+		add(grid);
 
         	var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/slash'));
 		slash.antialiasing = ClientPrefs.globalAntialiasing;
@@ -170,9 +164,6 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		checker.x -= 0.45;
-		checker.y -= 0.16;
-
         	lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, CoolUtil.boundTo(elapsed * 12, 0, 1));
 
@@ -230,31 +221,7 @@ class FreeplayState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
-				var errorStr:String = e.toString();
-				if(errorStr.startsWith('[file_contents,assets/data/')) 
-					errorStr = 'Missing file: ' + errorStr.substring(34, errorStr.length-1); //Missing chart
-				
-				missingText.text = 'ERROR LOADING CHART:\n$errorStr';
-
-				FlxTween.tween(missingBG, {alpha: 0.5}, 0.75, {ease: FlxEase.quadOut});
-				FlxTween.tween(missingText, {alpha: 1}, 1, {ease: FlxEase.quadOut});
-
-				// please ignore this god awful code :skull:
-				new FlxTimer().start(3, function(tmr:FlxTimer)
-				{
-					FlxTween.tween(missingBG, {alpha: 0}, 1, {ease: FlxEase.quadOut});
-					FlxTween.tween(missingText, {alpha: 0}, 1, {ease: FlxEase.quadOut});
-
-					new FlxTimer().start(1, function(tmr:FlxTimer)
-					{
-						missingText.text = '';
-					});
-				});
-
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-
-				super.update(elapsed);
-				return;
+				trace(e);
 			}
 			// }
 		}
