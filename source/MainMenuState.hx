@@ -212,9 +212,9 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		Main.toast.create(
-			FlxG.random.int(0, funny.length)[0], 
-			CoolUtil.colorFromString(FlxG.random.int(0, funny.length)[2]), 
-			FlxG.random.int(0, funny.length)[1]
+			funny[FlxG.random.int(0, funny.length)][0], 
+			CoolUtil.colorFromString(funny[FlxG.random.int(0, funny.length)][2]), 
+			funny[FlxG.random.int(0, funny.length)][1]
 		);
 
 		super.create();
