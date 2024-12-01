@@ -39,8 +39,8 @@ class ScaryState extends FlxState
 
 			if (triedToLeave) 
 			{
-				Application.current.window.title = randomString();
-            	daText.text = randomString();
+				Application.current.window.title = randomString(FlxG.random.int(10, 90));
+            	daText.text = randomString(10, 50);
 			}
 
         	super.update(elapsed);
@@ -51,11 +51,13 @@ class ScaryState extends FlxState
 	static inline var numbers:String = "0123456789";
 	static inline var symbols:String = "!@#$%&()*+-,./:;<=>?^[]{}";
 
-	inline public static function randomString() 
+	inline public static function randomString(len:Int) 
 	{
 		var str = "";
+		for (i in 0...len) {
 			for (e in [upperCase, lowerCase, numbers, symbols])
 				str += e.charAt(FlxG.random.int(0, e.length - 1));
+		}
 
 		return str;
 	}
