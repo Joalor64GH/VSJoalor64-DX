@@ -40,7 +40,7 @@ class ScaryState extends FlxState
 			if (triedToLeave) 
 			{
 				Application.current.window.title = randomString(FlxG.random.int(10, 90));
-            	daText.text = randomString(10, 50);
+            	daText.text = randomString(FlxG.random.int(10, 50));
 			}
 
         	super.update(elapsed);
